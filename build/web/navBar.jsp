@@ -7,11 +7,30 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
+        <nav class="nav-bar">
+        <div class="nav-item" >
+            <p>Flights</p>
+            <a class="nav-icon" href="home.jsp">
+                <i class="fa fa-plane" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="nav-item">
+            <p>Transaction History</p>
+            <a class="nav-icon" href="transactionList.jsp">
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="nav-item">
+            <p>Searching Id Ticket</p>
+            <a class="nav-icon" href="ticketSearching.jsp">
+                <i class="fa fa-ticket" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="nav-item">
+            <p>Management Mode</p>
+            <a class="nav-icon" href="login.jsp">
+                <i class="fa fa-wrench" aria-hidden="true"></i>
+            </a>
+        </div>
+    </nav>
 </html>

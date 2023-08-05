@@ -10,7 +10,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Plane Management</title>
+        <title>Home page</title>
         <link rel="stylesheet" href="./CSS/homecss.css">
         <link rel="icon"
             href="https://codelearn.io/CodeCamp/CodeCamp/Upload/60329921a2cc4b7abf76f8f97ab7e62e.png">
@@ -24,18 +24,36 @@
     </head>
    <body>  
         <header>
-            <%@include file="header.jsp" %>
+            <%@include file="header.jsp" %>           
         </header>
         <div class="content">
             <form  class="flight-box">
                 <div class="search-bar">
                     <div class="search-bar-item1">
                         <p>Departure From: </p> 
-                        <input type="text" name="departure" id="departure">
+                        <select id="departure" name="departure">
+                            <option>Choose departure</option>
+                            <option>Hà Nội</option>
+                            <option>Tp Hồ Chí Minh</option>
+                            <option>Huế</option>
+                            <option>Đà Nẵng</option>
+                            <option>Hải Dương</option>
+                            <option>Cần Thơ</option>
+                            <option>Gia Lai</option>
+                        </select>
                     </div>
                     <div class="search-bar-item1">
                         <p>Destination: </p> 
-                        <input type="text" name="destination" id="destination">
+                        <select id="destination" name="destination">
+                            <option>Choose destination</option>
+                            <option>Hà Nội</option>
+                            <option>Tp Hồ Chí Minh</option>
+                            <option>Huế</option>
+                            <option>Đà Nẵng</option>
+                            <option>Hải Dương</option>
+                            <option>Cần Thơ</option>
+                            <option>Gia Lai</option>
+                        </select>
                     </div>
                     <div class="search-bar-item2">
                         <p>Departure date:</p> 
