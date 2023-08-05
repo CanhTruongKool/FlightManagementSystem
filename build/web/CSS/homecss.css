@@ -1,0 +1,149 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
+body{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-image: url('https://d1e00ek4ebabms.cloudfront.net/production/48b15eb2-4302-4c1a-a6aa-3040e60ee46f.jpg');
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+}
+header{
+    display: flex;
+    width: 100%;
+    backdrop-filter: blur(10px);
+    height: 9%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    backdrop-filter: blur(25px);
+    justify-content: space-between;
+}
+.nav-bar { 
+    color: white;
+    display: flex;
+    width: 60%;
+    float: left;
+    justify-content: end;
+}
+.nav-bar .nav-item{
+    cursor: pointer;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    margin-right: 1%;
+}
+.nav-bar .nav-item .nav-icon{
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 500px;
+    border: solid 1px white;  
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    margin-bottom: 10px;
+    transition: .5s ease;
+    background-color: rgba(255, 255, 255, 0.484);
+}
+.nav-bar .nav-item:hover > .nav-icon{
+    border-color: black ;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.504);
+}
+.header-logo{
+    margin-left: 2%;
+    display: flex;
+    align-items: center;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/57/Airplane_silhouette_S.png');
+    background-repeat: no-repeat;
+    background-size: 70%;
+    width: 20%;
+}
+.header-logo h1{
+    font-family: 'Times New Roman', Times, serif;    
+    color: white;
+}
+.content{
+    background-color: rgba(6, 6, 6, 0.121);
+    width: 90%;
+    height: 80%;
+    backdrop-filter: blur(10px);
+}
+.search-bar{
+    display: flex;
+    width: 95%;
+    margin: auto;
+    justify-content:space-around;
+    align-items: center;
+    margin-top: 2%;
+    flex-wrap: wrap;
+    background-color: rgba(255, 255, 255, 0.274);
+    height: 50px;
+    border-radius: 7px;
+}
+.search-bar .search-bar-item1{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    float: left;
+}
+.search-bar .search-bar-item2{
+    display: flex;
+    flex-direction: column;
+}
+.search-bar .search-bar-item2 input{
+    min-width: 120%;
+}
+.search-bar .search-bar-item2 p{
+float: left;
+}
+.search-bar .search-bar-item1 p {
+    float: left;
+}
+.search-bar p{
+    font-weight: bold;
+    color: white;
+}
+.search-bar input{
+    background-color: rgba(240, 248, 255, 0);
+    color: white;
+    width: 50%;
+    height: 120%;
+    border: none;
+    border-bottom: solid 1px rgb(255, 255, 255);
+    padding-bottom: 5px;
+}
+.search-bar input:last-of-type{
+    width: 60%;
+}
+.search-bar input:focus{
+        outline: none;
+}
+.search-button{
+    float: right;
+    width: 20%;
+}
+.search-button button{
+    float: right;
+    padding: 10px 60px;
+    background-color: rgba(255, 255, 255, 0.274);
+    border: none;
+    font-size: 1.1rem;
+    color: white;
+    cursor: pointer;
+    border-radius: 7px;
+    transition: .5s ease;
+}
+.search-button button:hover{
+    background-color: rgba(255, 255, 255, 0.488);
+    box-shadow: 0px 0px 10px white;
+}
