@@ -9,6 +9,8 @@ import DAOS.FlightDAO;
 import Model.Flight;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +22,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Administrator
  */
-public class SearchingFlightController extends HttpServlet {
+public class HomeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,14 +35,9 @@ public class SearchingFlightController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        String departure = request.getParameter("departure");
-        String destination = request.getParameter("destination");
-        String date = request.getParameter("time");
-     
-        FlightDAO fd = new FlightDAO();
-        //paging
+        if(session != null) session.removeAttribute("FlightList");
+        FlightDAO fd = new FlightDAO(); 
         int page = 0;
         try {
             page =Integer.parseInt(request.getParameter("page")) ;
@@ -48,42 +45,20 @@ public class SearchingFlightController extends HttpServlet {
         } catch (Exception e) {
             page = 0;
         }
-        
         if(page < 0) page = 0;
-        
-         ArrayList<Flight> FlightList = new ArrayList<>();
-        try {
-            FlightList= (ArrayList<Flight>)session.getAttribute("FlightList");
-        } catch (Exception e) {
-           
-        }
-        int size = 0;
-        if(FlightList == null) size = fd.searchFlight(departure, destination, date).size();
-        else size = fd.searchFlight(FlightList.get(0).getDeparturePlace(), FlightList.get(0).getDestination(),FlightList.get(0).getDepartureDate().toString()).size();
-        int numberPerPage =9;
+        int size = fd.flightList.size(), numberPerPage =9;
         int num = (size %9 == 0) ? (size /9 ) : ((size/9) +1);
         
         int start = 1, end = 0;
         start = (page)* numberPerPage;
         end = Math.min((page +1) * numberPerPage, size);
-        System.out.println(start + "  " + end + " " + size);
-        // end paging
         
+        ArrayList<Flight> flightList = fd.getFlight(start, end);
+        
+        request.setAttribute("position", "home");
         request.setAttribute("page", page);
         request.setAttribute("num", num);
-       
-        if(FlightList == null) FlightList=fd.getSearchFlight(departure, destination, date, start, end);
-        else FlightList = fd.getSearchFlight(FlightList.get(0).getDeparturePlace(), FlightList.get(0).getDestination(),FlightList.get(0).getDepartureDate().toString(),start,end);
-        
-        String SearchResult= "";
-        if(FlightList.isEmpty()) SearchResult = "Searching result : Not Found";
-        else
-        {SearchResult = "Seaching result : Departure from : " + FlightList.get(0).getDeparturePlace() + ", Destination at :" + FlightList.get(0).getDestination()
-                + ", At time : " + FlightList.get(0).getDepartureDate().toString();}
-        
-        request.setAttribute("position","searchflight");
-        session.setAttribute("searchResult", SearchResult);
-        session.setAttribute("FlightList", FlightList);
+        request.setAttribute("FlightList", flightList);
         request.getRequestDispatcher("home.jsp").forward(request, response);
     }
 
@@ -124,6 +99,6 @@ public class SearchingFlightController extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>g
+    }// </editor-fold>
 
 }

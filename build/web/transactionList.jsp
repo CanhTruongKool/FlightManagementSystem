@@ -21,6 +21,7 @@
         <link
             href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Roboto:wght@100&display=swap"
             rel="stylesheet">
+        <style><%@include file="/CSS/homecss.css"%></style>
     </head>
    <body>  
         <header>

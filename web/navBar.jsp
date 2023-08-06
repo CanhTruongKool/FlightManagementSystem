@@ -10,7 +10,7 @@
         <nav class="nav-bar">
         <div class="nav-item" >
             <p>Flights</p>
-            <a class="nav-icon" href="home.jsp">
+            <a class="nav-icon" href="home">
                 <i class="fa fa-plane" aria-hidden="true"></i>
             </a>
         </div>
@@ -21,7 +21,7 @@
             </a>
         </div>
         <div class="nav-item">
-            <p>Searching Id Ticket</p>
+            <p>Searching ID Ticket</p>
             <a class="nav-icon" href="ticketSearching.jsp">
                 <i class="fa fa-ticket" aria-hidden="true"></i>
             </a>

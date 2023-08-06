@@ -4,6 +4,9 @@
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
 }
+a{
+    text-decoration: none;
+}
 body{
     display: flex;
     justify-content: center;
@@ -146,4 +149,23 @@ float: left;
 .search-button button:hover{
     background-color: rgba(255, 255, 255, 0.488);
     box-shadow: 0px 0px 10px white;
+}
+
+.searchResult{
+    color: white;
+    margin-top:20px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product {
+    width: calc(33.33% - 20px);
+    margin: 10px;
+    padding: 10px;
+    background-color: #333;
+    border: 1px solid #fff;
+    box-sizing: border-box;
 }
