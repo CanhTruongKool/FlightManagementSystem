@@ -37,31 +37,19 @@
                             <p>Departure Place: </p> 
                             <select id="departure" name="departure">
                                 <option>Choose departure</option>
-                                <option>Ha Noi</option>
-                                <option>TP Ho Chi Minh</option>
-                                <option>Hue</option>
-                                <option>Da Nang</option>
-                                <option>Hai Duong</option>
-                                <option>Can Tho</option>
-                                <option>Gia Lai</option>
+                                
                             </select>
                         </div>
                         <div class="search-bar-item1">
                             <p>Destination: </p> 
                             <select id="destination" name="destination">
-                                <option>Choose departure</option>
-                                <option>Ha Noi</option>
-                                <option>TP Ho Chi Minh</option>
-                                <option>Hue</option>
-                                <option>Da Nang</option>
-                                <option>Hai Duong</option>
-                                <option>Can Tho</option>
-                                <option>Gia Lai</option>
+                                <option>Choose destination</option>
+                                
                             </select>
                         </div>
                         <div class="search-bar-item2">
                             <p>Departure date:</p> 
-                            <input id="time" name="time" type="datetime-local">
+                            <input id="time" name="time" type="date">
                         </div>
                         <div class="search-button">
                             <button id="search">Search <i class="fa fa-search" aria-hidden="true"></i></button>
@@ -74,36 +62,82 @@
             <div>
                 <h3 class="searchResult">${sessionScope.searchResult}</h3>
             </div> 
-
-            <div class="container" style="color: white">
-                <c:forEach var="f" items="${requestScope.FlightList}" varStatus="status">  
-                    <div class="product">
-                        <h4>ID: ${f.getID()} </h4>
-                        <h5>Departure place: ${f.getDeparturePlace()} || Destination: ${f.getDestination()}</h5>                        
-                        <h5>At time: ${f.getDepartureDate()}</h5>
-                        <button id="search">View Detail</button>
-                    </div>  
-                </c:forEach>
-            </div>
-            <div class="container" style="color: white">
-                <c:forEach var="f" items="${sessionScope.FlightList}" varStatus="status">  
-                    <div class="product">
-                        <h4>ID: ${f.getID()} </h4>
-                        <h5>Departure place: ${f.getDeparturePlace()} || Destination: ${f.getDestination()}</h5> 
-                        <h5>At time: ${f.getDepartureDate()}</h5>
-                        <button id="search">View Detail</button>
-                    </div>  
-                </c:forEach>
-            </div>
-
-            <div  style="position: fixed; bottom: 0; right: 0;">
+                <c:set var = "canSearch" scope = "session" value = "${sessionScope.FlightList}"/>
+            <c:if test = "${canSearch == null}">
+                <div class="flight-list">
+                    <c:forEach var="f" items="${requestScope.FlightList}" varStatus="status"> 
+                        <div class="flight">
+                            <div class="flight-left">
+                                <div class="flight-logo">
+                                    <h4>FMS <i class="fa fa-plane" aria-hidden="true"></i>
+                                        airline</h4>
+                                </div>
+                                <h3>Flight ID:</h3>
+                                <p>${f.getID()}</p>
+                            </div>
+                            <div class="flight-right">
+                                <div class="flight-travel">
+                                    <div class="flight-right-content">
+                                        <h4>Departure Place:<p> ${f.getDeparturePlace()}</p></h4>
+                                    </div>
+                                    <div class="flight-right-content">
+                                        <h4>Destination:<p> ${f.getDestination()} <p></h4>
+                                    </div>
+                                </div>
+                                <div class="flight-right-content">
+                                    <h4 class="date">Departure date: <p> ${f.getDepartureDate().toString().replace("T", " AT ")} <p></h4>
+                                </div>
+                                <div class="book-nav">
+                                    <a style="color: white" href="viewflight?ID=${f.getID()}">Details</a>
+                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </c:if>
+            <c:set var = "canSearch" scope = "session" value = "${sessionScope.FlightList}"/>
+            <c:if test = "${canSearch != null}">
+                <div class="flight-list">
+                    <c:forEach var="f" items="${sessionScope.FlightList}" varStatus="status"> 
+                        <div class="flight">
+                            <div class="flight-left">
+                                <div class="flight-logo">
+                                    <h4>FMS <i class="fa fa-plane" aria-hidden="true"></i>
+                                        airline</h4>
+                                </div>
+                                <h3>Flight ID:</h3>
+                                <p>${f.getID()}</p>
+                            </div>
+                            <div class="flight-right">
+                                <div class="flight-travel">
+                                    <div class="flight-right-content">
+                                        <h4>Departure Place:<p> ${f.getDeparturePlace()}</p> </h4>
+                                    </div>
+                                    <div class="flight-right-content">
+                                        <h4>Destination:<p> ${f.getDestination()} </p></h4>
+                                    </div>
+                                </div>
+                                <div class="flight-right-content">
+                                    <h4 class="date">Departure date:<p> ${f.getDepartureDate().toString().replace("T", " AT ")} </p></h4>
+                                </div>
+                                <div class="book-nav">
+                                    <a style="color: white" href="viewflight?ID=${f.getID()}">Details</a>
+                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </c:if>
+            <div class="paging-button">
                 <c:set var = "Page" scope = "request" value = "${requestScope.page}"/>
                 <c:if test = "${Page > 0}">
-                    <button id=""><a href="${requestScope.position}?page=${requestScope.page -1}">Previous </button>
+                    <button id="previous"><a href="${requestScope.position}?page=${requestScope.page -1}">Previous <i class="fa fa-caret-square-o-left" aria-hidden="true"></i></button>
                 </c:if>
                 <c:set var = "num" scope = "request" value = "${requestScope.num}"/>
                 <c:if test = "${Page < num -1}">
-                    <button id=""><a href="${requestScope.position}?page=${requestScope.page +1}">Next</a></button>
+                    <button id="next"><a href="${requestScope.position}?page=${requestScope.page +1}">Next <i class="fa fa-caret-square-o-right" aria-hidden="true"></i> </a></button>
                 </c:if>
 
             </div>
@@ -117,5 +151,44 @@
             inputElement.value = inputElement.value.replace(' ', 'T'); // Thêm ký tự "T" vào trước giờ
             this.submit();
         });
+      
+        async function getDistrict() {
+            const response = await fetch("https://provinces.open-api.vn/api/p/");
+            var districtList = response.json();
+            districtList.then(arr => {
+                arr.forEach((item) => {
+                    var opt = document.createElement('option');
+                    var opt2 = document.createElement('option');
+                    (async () => {
+                        await (() => {
+                            ;
+                            opt.value = removeAccents(item.name);
+                            opt.innerHTML = removeAccents(item.name);
+                            opt2.value = removeAccents(item.name);
+                            opt2.innerHTML = removeAccents(item.name);
+                        })();
+                        await (() => {
+                            document.getElementById('destination').appendChild(opt);
+                        })();
+                        await (() => {
+                            document.getElementById('departure').appendChild(opt2);
+                        })();
+                    })();
+                })
+            });
+        }
+        ;
+        function removeAccents(str) {
+            return str.normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+                    .replace('Tinh', '')
+                    .replace('Thanh pho', '');
+        }
+        document.onreadystatechange = function () {
+            if (document.readyState == "complete") {
+                getDistrict();
+            }
+        }
     </script>
 </html>

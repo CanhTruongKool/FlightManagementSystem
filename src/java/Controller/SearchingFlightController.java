@@ -38,7 +38,6 @@ public class SearchingFlightController extends HttpServlet {
         String departure = request.getParameter("departure");
         String destination = request.getParameter("destination");
         String date = request.getParameter("time");
-     
         FlightDAO fd = new FlightDAO();
         //paging
         int page = 0;
@@ -59,7 +58,7 @@ public class SearchingFlightController extends HttpServlet {
         }
         int size = 0;
         if(FlightList == null) size = fd.searchFlight(departure, destination, date).size();
-        else size = fd.searchFlight(FlightList.get(0).getDeparturePlace(), FlightList.get(0).getDestination(),FlightList.get(0).getDepartureDate().toString()).size();
+        else size = fd.searchFlight(FlightList.get(0).getDeparturePlace(), FlightList.get(0).getDestination(),FlightList.get(0).getDepartureDate().toString().substring(0, 9)).size();
         int numberPerPage =9;
         int num = (size %9 == 0) ? (size /9 ) : ((size/9) +1);
         
@@ -73,13 +72,12 @@ public class SearchingFlightController extends HttpServlet {
         request.setAttribute("num", num);
        
         if(FlightList == null) FlightList=fd.getSearchFlight(departure, destination, date, start, end);
-        else FlightList = fd.getSearchFlight(FlightList.get(0).getDeparturePlace(), FlightList.get(0).getDestination(),FlightList.get(0).getDepartureDate().toString(),start,end);
+        else FlightList = fd.getSearchFlight(FlightList.get(0).getDeparturePlace(), FlightList.get(0).getDestination(),FlightList.get(0).getDepartureDate().toString().substring(0, 9),start,end);
         
         String SearchResult= "";
         if(FlightList.isEmpty()) SearchResult = "Searching result : Not Found";
         else
-        {SearchResult = "Seaching result : Departure from : " + FlightList.get(0).getDeparturePlace() + ", Destination at :" + FlightList.get(0).getDestination()
-                + ", At time : " + FlightList.get(0).getDepartureDate().toString();}
+        {SearchResult = "Seaching result : Departure from : " + FlightList.get(0).getDeparturePlace() + ", Destination at :" + FlightList.get(0).getDestination();}
         
         request.setAttribute("position","searchflight");
         session.setAttribute("searchResult", SearchResult);

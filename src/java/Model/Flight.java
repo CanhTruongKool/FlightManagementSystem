@@ -6,7 +6,6 @@
 package Model;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  *
@@ -16,17 +15,19 @@ public class Flight {
     private String ID, DeparturePlace,Destination;
     private LocalDateTime DepartureDate;
     private int NumberOfSeats,MaxCargoWeight;
-
+    private float Price;
+    
     public Flight() {
     }
 
-    public Flight(String ID, String DeparturePlace, String Destination, LocalDateTime DepartureDate, int NumberOfSeats, int MaxCargoWeight) {
+    public Flight(String ID, String DeparturePlace, String Destination, LocalDateTime DepartureDate, int NumberOfSeats, int MaxCargoWeight, float Price) {
         this.ID = ID;
         this.DeparturePlace = DeparturePlace;
         this.Destination = Destination;
         this.DepartureDate = DepartureDate;
         this.NumberOfSeats = NumberOfSeats;
         this.MaxCargoWeight = MaxCargoWeight;
+        this.Price = Price;
     }
 
     public String getID() {
@@ -77,10 +78,19 @@ public class Flight {
         this.MaxCargoWeight = MaxCargoWeight;
     }
 
+    public float getPrice() {
+        return Price;
+    }
+
+    public void setPrice(float Price) {
+        this.Price = Price;
+    }
+
     @Override
     public String toString() {
-        return "Flight{" + "ID=" + ID + ", DeparturePlace=" + DeparturePlace + ", Destination=" + Destination + ", DepartureDate=" + DepartureDate + ", NumberOfSeats=" + NumberOfSeats + ", MaxCargoWeight=" + MaxCargoWeight + '}';
+        return "Flight{" + "ID=" + ID + ", DeparturePlace=" + DeparturePlace + ", Destination=" + Destination + ", DepartureDate=" + DepartureDate + ", NumberOfSeats=" + NumberOfSeats + ", MaxCargoWeight=" + MaxCargoWeight + ", Price=" + Price + '}';
     }
+
     
-    
+  
 }

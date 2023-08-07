@@ -5,6 +5,9 @@
  */
 package Controller;
 
+import DAOS.FlightDAO;
+import DAOS.TicketDAO;
+import Model.Flight;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -29,20 +32,21 @@ public class ViewFlightController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ViewFlightController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ViewFlightController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String ID = request.getParameter("ID");
+        
+        FlightDAO fd = new FlightDAO();
+        Flight flight = new Flight();
+        for(Flight f : fd.flightList){
+            if(f.getID().equals(ID)) flight = f;
         }
-    }
+        
+        TicketDAO td = new TicketDAO();
+        int numberSeats = td.CountTicket(ID);
+        
+        request.setAttribute("NumberOfSeats", numberSeats);
+        request.setAttribute("Flight", flight);
+        request.getRequestDispatcher("flightDetail.jsp").forward(request, response);
+        }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

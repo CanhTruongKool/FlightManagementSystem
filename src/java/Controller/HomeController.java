@@ -8,9 +8,6 @@ package Controller;
 import DAOS.FlightDAO;
 import Model.Flight;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,7 +33,10 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if(session != null) session.removeAttribute("FlightList");
+        if(session != null) 
+        {session.removeAttribute("FlightList");
+         session.removeAttribute("searchResult");
+        }
         FlightDAO fd = new FlightDAO(); 
         int page = 0;
         try {
