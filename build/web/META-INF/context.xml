@@ -8,3 +8,4 @@
         username="sa" password="123"
         driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
         url="jdbc:sqlserver://;serverName=localhost;databaseName=FMS_FlightManagementSystem;encrypt=true;trustServerCertificate=true"/>
+</Context>
