@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/flight" reloadable="true"
+<Context path="/FlightManagementSystem"
     cachingAllowed="false"
     antiResourceLocking="true">
     <Resource name="jdbc/MyAppDS" auth="Container"
         type="javax.sql.DataSource"
         maxTotal="100" maxIdle="20" maxWaitMillis="10000"
-        username="admin" password="123qwe"
+        username="sa" password="123"
         driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
         url="jdbc:sqlserver://;serverName=localhost;databaseName=FMS_FlightManagementSystem;encrypt=true;trustServerCertificate=true"/>
 </Context>
