@@ -5,9 +5,8 @@
  */
 package Controller;
 
-import DAOS.FlightDAO;
-import DAOS.TicketDAO;
-import Model.Flight;
+import DAOS.DataAccessObject;
+import Model.Ticket;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Administrator
  */
-public class ViewFlightController extends HttpServlet {
+public class SearchingTicketController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,22 +31,21 @@ public class ViewFlightController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String ID = request.getParameter("ID");
-        int id = Integer.parseInt(ID);
-        
-        FlightDAO fd = new FlightDAO();
-        Flight flight = new Flight();
-        for(Flight f : fd.flightList){
-            if(f.getID()== id) flight = f;
+        response.setContentType("text/html;charset=UTF-8");
+        Ticket ticket = (Ticket) request.getAttribute("Ticket");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet SearchingTicketController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Ticket information " + ticket.toString()+ "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        
-        TicketDAO td = new TicketDAO();
-        int numberSeats = td.CountTicket(ID);
-        
-        request.setAttribute("NumberOfSeats", numberSeats);
-        request.setAttribute("Flight", flight);
-        request.getRequestDispatcher("flightDetail.jsp").forward(request, response);
-        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

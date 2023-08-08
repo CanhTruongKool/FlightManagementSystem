@@ -6,20 +6,20 @@
 package Controller;
 
 import DAOS.FlightDAO;
-import DAOS.TicketDAO;
 import Model.Flight;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Administrator
  */
-public class ViewFlightController extends HttpServlet {
+public class HomeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,22 +32,35 @@ public class ViewFlightController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String ID = request.getParameter("ID");
-        int id = Integer.parseInt(ID);
-        
-        FlightDAO fd = new FlightDAO();
-        Flight flight = new Flight();
-        for(Flight f : fd.flightList){
-            if(f.getID()== id) flight = f;
+        HttpSession session = request.getSession();
+        if(session != null) 
+        {session.removeAttribute("FlightList");
+         session.removeAttribute("searchResult");
         }
-        
-        TicketDAO td = new TicketDAO();
-        int numberSeats = td.CountTicket(ID);
-        
-        request.setAttribute("NumberOfSeats", numberSeats);
-        request.setAttribute("Flight", flight);
-        request.getRequestDispatcher("flightDetail.jsp").forward(request, response);
+        FlightDAO fd = new FlightDAO(); 
+        int page = 0;
+        try {
+            page =Integer.parseInt(request.getParameter("page")) ;
+            System.out.println(page);
+        } catch (Exception e) {
+            page = 0;
         }
+        if(page < 0) page = 0;
+        int size = fd.flightList.size(), numberPerPage =9;
+        int num = (size %9 == 0) ? (size /9 ) : ((size/9) +1);
+        
+        int start = 1, end = 0;
+        start = (page)* numberPerPage;
+        end = Math.min((page +1) * numberPerPage, size);
+        
+        ArrayList<Flight> flightList = fd.getFlight(start, end);
+        
+        request.setAttribute("position", "home");
+        request.setAttribute("page", page);
+        request.setAttribute("num", num);
+        request.setAttribute("FlightList", flightList);
+        request.getRequestDispatcher("home.jsp").forward(request, response);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

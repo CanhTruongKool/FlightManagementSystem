@@ -1,0 +1,101 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
+a{
+    text-decoration: none;
+}
+body{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-image: url('https://d1e00ek4ebabms.cloudfront.net/production/48b15eb2-4302-4c1a-a6aa-3040e60ee46f.jpg');
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+}
+
+.flight .flight-left{
+    position: relative;
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.499);
+    border-radius: 10px;
+}
+
+.flight .flight-right{
+    border-left: 2px dotted #000000;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.499);
+    border-radius: 10px;
+}
+.flight .flight-left h3,p{
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bolder;
+}
+.flight-logo h4{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1em;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 7px 0;
+    color: white;
+    background-color: #1E3F85;
+    width: 100%;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/57/Airplane_silhouette_S.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    text-align: center;
+    background-size: 90%;
+    font-weight: bolder;
+}
+.flight-right{
+    position: relative;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+.flight-right-content{
+    margin-bottom: 2%;
+    margin-left: 5%;
+    display: flex;
+    width: 100%;
+}
+.flight-right-content p{
+    margin-left: 0%;
+    font-size: 24px;
+    color: white;
+}
+.flight-right-content h4{
+    width: 100%;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: 24px;
+}
+.flight-travel{
+    margin-top: 5%;
+}
+.content{
+    z-index: 1;
+}
+
+.BookTicketForm{
+    position: absolute;
+    width: 45%;
+    height: 80%;
+    background-color: white;
+    z-index: 2;
+    margin-left: 20%;
+    display: none;
+}

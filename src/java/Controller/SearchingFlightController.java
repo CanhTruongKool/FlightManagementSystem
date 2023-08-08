@@ -5,12 +5,16 @@
  */
 package Controller;
 
+import DAOS.FlightDAO;
+import Model.Flight;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,18 +34,55 @@ public class SearchingFlightController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SearchingFlightController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SearchingFlightController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        HttpSession session = request.getSession();
+        String departure = request.getParameter("departure");
+        String destination = request.getParameter("destination");
+        String date = request.getParameter("time");
+        FlightDAO fd = new FlightDAO();
+        //paging
+        int page = 0;
+        try {
+            page =Integer.parseInt(request.getParameter("page")) ;
+            System.out.println(page);
+        } catch (Exception e) {
+            page = 0;
         }
+        
+        if(page < 0) page = 0;
+        
+         ArrayList<Flight> FlightList = new ArrayList<>();
+        try {
+            FlightList= (ArrayList<Flight>)session.getAttribute("FlightList");
+        } catch (Exception e) {
+           
+        }
+        int size = 0;
+        if(FlightList == null) size = fd.searchFlight(departure, destination, date).size();
+        else size = fd.searchFlight(FlightList.get(0).getDeparturePlace(), FlightList.get(0).getDestination(),FlightList.get(0).getDepartureDate().toString().substring(0, 9)).size();
+        int numberPerPage =9;
+        int num = (size %9 == 0) ? (size /9 ) : ((size/9) +1);
+        
+        int start = 1, end = 0;
+        start = (page)* numberPerPage;
+        end = Math.min((page +1) * numberPerPage, size);
+        System.out.println(start + "  " + end + " " + size);
+        // end paging
+        
+        request.setAttribute("page", page);
+        request.setAttribute("num", num);
+       
+        if(FlightList == null) FlightList=fd.getSearchFlight(departure, destination, date, start, end);
+        else FlightList = fd.getSearchFlight(FlightList.get(0).getDeparturePlace(), FlightList.get(0).getDestination(),FlightList.get(0).getDepartureDate().toString().substring(0, 9),start,end);
+        
+        String SearchResult= "";
+        if(FlightList.isEmpty()) SearchResult = "Searching result : Not Found";
+        else
+        {SearchResult = "Seaching result : Departure from : " + FlightList.get(0).getDeparturePlace() + ", Destination at :" + FlightList.get(0).getDestination();}
+        
+        request.setAttribute("position","searchflight");
+        session.setAttribute("searchResult", SearchResult);
+        session.setAttribute("FlightList", FlightList);
+        request.getRequestDispatcher("home.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -81,6 +122,6 @@ public class SearchingFlightController extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }// </editor-fold>g
 
 }
