@@ -15,18 +15,15 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 /**
  *
  * @author Administrator
  */
-public class FlightDAO {
-
+public class FlightDAO extends DataAccessObject{
+    
     public ArrayList<Flight> flightList = readData();
-    private static String DB_URL = "jdbc:sqlserver://localhost:1433;"
-            + "databaseName=FMS_FlightManagementSystem";
-    private static String USER_NAME = "sa";
-    private static String PASSWORD = "123";
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     // LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
@@ -38,11 +35,12 @@ public class FlightDAO {
         ArrayList<Flight> list = new ArrayList<>();
         try {
             // connnect to database 'FMS_FlightManagementSystem'
-            Connection conn = getConnection(DB_URL, USER_NAME, PASSWORD);
+        
+          String sql ="select ID, DeparturePlace,Destination,DepartureDate,NumberOfSeats,MaxCargoWeight,Price from Flights";
             // crate statement
-            Statement stmt = conn.createStatement();
+            PreparedStatement stmt = connection.prepareStatement(sql);
             // get data from table 'tbl Flight'
-            ResultSet rs = stmt.executeQuery("select ID, DeparturePlace,Destination,DepartureDate,NumberOfSeats,MaxCargoWeight,Price from Flights");
+            ResultSet rs = stmt.executeQuery();
             // show data
 
             while (rs.next()) {
@@ -58,8 +56,6 @@ public class FlightDAO {
                 list.add(f);
             }
 
-            // close connection
-            conn.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -71,7 +67,6 @@ public class FlightDAO {
         ArrayList<Flight> list = new ArrayList<>();
         try {
             // connnect to database 'FMS_FlightManagementSystem'
-            Connection conn = getConnection(DB_URL, USER_NAME, PASSWORD);
             // crate statement
             // get data from table 'tbl Flight'
             String sql = "select ID, DeparturePlace,Destination,DepartureDate,NumberOfSeats,MaxCargoWeight,Price "
@@ -83,7 +78,7 @@ public class FlightDAO {
             // Parse the date string to a LocalDateTime object with time set to 23:59:59
             LocalDateTime endDate = LocalDateTime.parse(date + "T23:59:59");
 
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, departure.trim());
             statement.setString(2,destination.trim());
             statement.setTimestamp(3, Timestamp.valueOf(startDate));
@@ -104,9 +99,6 @@ public class FlightDAO {
 
                 list.add(f);
             }
-
-            // close connection
-            conn.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -130,6 +122,7 @@ public class FlightDAO {
         return resultList;
     }
 
+    
     public static Connection getConnection(String dbURL, String userName,
             String password) {
         Connection conn = null;
@@ -143,11 +136,4 @@ public class FlightDAO {
         return conn;
     }
 
-    public static void main(String[] args) {
-        FlightDAO fd = new FlightDAO();
-        ArrayList<Flight> list = fd.searchFlight(" Ha Noi", " Ho Chi Minh", "2023-08-20");
-        for (Flight i : list) {
-            System.out.println(i);
-        }
-    }
 }

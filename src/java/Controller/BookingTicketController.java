@@ -5,6 +5,10 @@
  */
 package Controller;
 
+import DAOS.PassengerDAO;
+import DAOS.TicketDAO;
+import Model.Passenger;
+import Model.Ticket;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
@@ -37,8 +41,16 @@ public class BookingTicketController extends HttpServlet {
         String identifyNumber = request.getParameter("identifyNumber");
         String phone = request.getParameter("phone");
         String price = request.getParameter("flightPrice");
+        float Price = Float.parseFloat(price);
+        PassengerDAO pd = new PassengerDAO();
+        int passenger = pd.getPassenger(name, identifyNumber, phone);
+        System.out.println(passenger);
+        if(passenger==0) passenger = pd.CreatePassenger(name, identifyNumber, phone);
+        TicketDAO td = new TicketDAO();
+        Ticket ticket = td.createTicket(FlightID, passenger,shortenHash(hashString(FlightID+ "abc" +passenger), 6),Price);
         
-        
+        request.setAttribute("Ticket", ticket);
+        request.getRequestDispatcher("ticketSearching").forward(request, response);
     }
     
      public String hashingTicketID(String ID) {

@@ -21,12 +21,8 @@ import java.util.ArrayList;
  *
  * @author Administrator
  */
-public class TicketDAO {
+public class TicketDAO extends DataAccessObject{
 
-    private static String DB_URL = "jdbc:sqlserver://localhost:1433;"
-            + "databaseName=FMS_FlightManagementSystem";
-    private static String USER_NAME = "sa";
-    private static String PASSWORD = "123";
 
     public TicketDAO() {
     }
@@ -34,11 +30,9 @@ public class TicketDAO {
     public int CountTicket(String FlightID) {
         int result = 0;
         try {
-            // connnect to database 'FMS_FlightManagementSystem'
-            Connection conn = getConnection(DB_URL, USER_NAME, PASSWORD);
-            // crate statement
+
             String sql = "select count(*) from Tickets where FlightID = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            PreparedStatement stmt = connection.prepareStatement(sql);
             System.out.println(FlightID);
             stmt.setString(1, FlightID); //FMS-A01
             // get data from table 'tbl Ticket'
@@ -48,9 +42,6 @@ public class TicketDAO {
             if (rs.next()) {
                 result = rs.getInt(1); // Lấy giá trị từ cột đầu tiên của kết quả truy vấn
             }
-
-            // close connection
-            conn.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -59,89 +50,69 @@ public class TicketDAO {
     }
 
     public Ticket searchTicket(String code) {
+        Ticket result = new Ticket();
         try {
             // connnect to database 'FMS_FlightManagementSystem'
-            Connection conn = getConnection(DB_URL, USER_NAME, PASSWORD);
             // crate statement
-            // get data from table 'tbl Flight'
-            String sql = "";
-
-            PreparedStatement statement = conn.prepareStatement(sql);
-
-            // Thực hiện truy vấn
-            ResultSet rs = statement.executeQuery();
+            String sql = "select FlightID,PassengerID,Code,Price from Tickets where Code = ?";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, code); //FMS-A01
+            // get data from table 'tbl Ticket'
+            ResultSet rs = stmt.executeQuery();
             // show data
 
             while (rs.next()) {
-                int ID = rs.getInt("ID");
-                String Departure = rs.getString("DeparturePlace");
-                String Destination = rs.getString("Destination");
-                LocalDateTime departureDate = rs.getTimestamp("DepartureDate").toLocalDateTime();
-                int numberOfSeats = rs.getInt("NumberOfSeats");
-                int maxCargoWeight = rs.getInt("MaxCargoWeight");
+                int flightID = rs.getInt("FlightID");
+                int passengerID = rs.getInt("PassengerID");
+                String Code = rs.getString("Code");
                 float price = rs.getFloat("Price");
-                Flight f = new Flight(ID, Departure, Destination, departureDate, numberOfSeats, maxCargoWeight, price);
-
+                result = new Ticket(flightID, passengerID, Code, price);
             }
 
-            // close connection
-            conn.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        return null;
+        return result;
     }
     
-     public Ticket createTicket(String FlightID,String PassengerID,String Code) {
+     public Ticket createTicket(String FlightID,int PassengerID,String Code,float Price) {
+         Ticket result = new Ticket();
         try {
             // connnect to database 'FMS_FlightManagementSystem'
-            Connection conn = getConnection(DB_URL, USER_NAME, PASSWORD);
             // crate statement
-            // get data from table 'tbl Flight'
-            String sql = "";
-
-            PreparedStatement statement = conn.prepareStatement(sql);
-
-            // Thực hiện truy vấn
-            ResultSet rs = statement.executeQuery();
+            // get data from table 'tbl Ticket'
+            String sql = "Insert into [dbo].[Tickets]([FlightID],[PassengerID],[Code],[Price])"
+                    + "values (?,?,?,?)";
             // show data
+             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            while (rs.next()) {
-                int ID = rs.getInt("ID");
-                String Departure = rs.getString("DeparturePlace");
-                String Destination = rs.getString("Destination");
-                LocalDateTime departureDate = rs.getTimestamp("DepartureDate").toLocalDateTime();
-                int numberOfSeats = rs.getInt("NumberOfSeats");
-                int maxCargoWeight = rs.getInt("MaxCargoWeight");
-                float price = rs.getFloat("Price");
-                Flight f = new Flight(ID, Departure, Destination, departureDate, numberOfSeats, maxCargoWeight, price);
-
+            stmt.setString(1, FlightID);
+            stmt.setInt(2, PassengerID);
+            System.out.println(PassengerID);
+            stmt.setString(3, Code);
+            stmt.setFloat(4, Price);
+            // get data from table 'tbl Ticket'
+            // Execute the insert statement
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows > 0) {
+                // Insert successful, retrieve the generated keys
+                ResultSet generatedKeys = stmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    result = new Ticket(Integer.parseInt(FlightID), PassengerID, Code, Price);
+                    // Set other attributes if needed
+                }
             }
 
-            // close connection
-            conn.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        return null;
-    }
-    
-    public static Connection getConnection(String dbURL, String userName,
-            String password) {
-        Connection conn = null;
-        try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conn = DriverManager.getConnection(dbURL, userName, password);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return conn;
+        return result;
     }
 
     public static void main(String[] args) {
         TicketDAO td = new TicketDAO();
-        System.out.println(td.CountTicket("FMS-A01"));
+        System.out.println(td.searchTicket("aaa"));
     }
 }
