@@ -32,7 +32,6 @@ public class DataAccessObject implements Serializable{
 
     private Connection getConnection(){
         Context context;
-       
         try {
             context = new InitialContext();
             Context tomcatCtx = (Context) context.lookup("java:comp/env");
@@ -55,12 +54,4 @@ public class DataAccessObject implements Serializable{
         if(connection != null)
             connection.close();
     }
-    
-    public static void main(String[] args) {
-        DataAccessObject d = new DataAccessObject();
-     //   Connection c = d.getConnection();
-        if(d.connection == null) System.out.println("Connect Error");
-        else System.out.println("Connect successfully");
-    }
-           
 }
