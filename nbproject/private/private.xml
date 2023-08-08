@@ -5,8 +5,9 @@
         <group>
             <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/web/home.jsp</file>
             <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Controller/BookingTicketController.java</file>
+            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Model/Cargo.java</file>
+            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Model/Ticket.java</file>
             <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/DAOS/FlightDAO.java</file>
-            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/DAOS/TicketDAO.java</file>
             <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/web/flightDetail.jsp</file>
             <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Controller/ViewFlightController.java</file>
         </group>

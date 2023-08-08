@@ -34,7 +34,7 @@
                 <h4><label for="">Enter your Identity card number</label> <input type="tel" name="identifyNumber" pattern="[0-9]{12}"></h4>
                 <h4><label for="">Enter your name:</label> <input name="name" type="text"></h4>
                 <h4><label for="phone">Enter your phone number:</label><input type="tel" id="phone" name="phone" pattern="[0-9]{10}"></h4>
-                <h4> <label for="">Flight Price </label> <input name="flightPrice" value="${f.getPrice()}" readonly="readonly"></h4>
+                <h4> <label for="">Flight Price </label> <input name="flightPrice" value="${f.getPrice()}" readonly="readonly">VND</h4>
                 <button onclick=""> Buy </button>
                 <button onclick="closeFormTicket(event)"> Close Form </button>
             </form>
@@ -50,7 +50,7 @@
                     <div class="flight-travel">
                         <div class="flight-right-content">
                             <h4>Flight ID:</h4>
-                            <p style="font-size: 24px;"> ${f.getID()}</p>
+                            <p style="font-size: 24px;"> FMS-A0${f.getID()}</p>
                         </div>
                         <div class="flight-right-content">
                             <h4>Departure Place:</h4>

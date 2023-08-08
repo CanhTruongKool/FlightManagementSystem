@@ -39,8 +39,8 @@ public class TicketDAO {
             // crate statement
             String sql = "select count(*) from Tickets where FlightID = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            System.out.println(FlightID.substring(6));
-            stmt.setString(1, FlightID.substring(6)); //FMS-A01
+            System.out.println(FlightID);
+            stmt.setString(1, FlightID); //FMS-A01
             // get data from table 'tbl Ticket'
             ResultSet rs = stmt.executeQuery();
             // show data
@@ -80,7 +80,7 @@ public class TicketDAO {
                 int numberOfSeats = rs.getInt("NumberOfSeats");
                 int maxCargoWeight = rs.getInt("MaxCargoWeight");
                 float price = rs.getFloat("Price");
-                Flight f = new Flight("FMS-A0" + ID, Departure, Destination, departureDate, numberOfSeats, maxCargoWeight, price);
+                Flight f = new Flight(ID, Departure, Destination, departureDate, numberOfSeats, maxCargoWeight, price);
 
             }
 
@@ -115,7 +115,7 @@ public class TicketDAO {
                 int numberOfSeats = rs.getInt("NumberOfSeats");
                 int maxCargoWeight = rs.getInt("MaxCargoWeight");
                 float price = rs.getFloat("Price");
-                Flight f = new Flight("FMS-A0" + ID, Departure, Destination, departureDate, numberOfSeats, maxCargoWeight, price);
+                Flight f = new Flight(ID, Departure, Destination, departureDate, numberOfSeats, maxCargoWeight, price);
 
             }
 

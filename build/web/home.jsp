@@ -34,14 +34,14 @@
                 <form  class="flight-box" action="searchflight" method='post'>
                     <div class="search-bar">
                         <div class="search-bar-item1">
-                            <p>Departure Place: </p> 
+                            <p>Departure Place:</p> 
                             <select id="departure" name="departure">
                                 <option>Choose departure</option>
                                 
                             </select>
                         </div>
                         <div class="search-bar-item1">
-                            <p>Destination: </p> 
+                            <p>Destination:</p> 
                             <select id="destination" name="destination">
                                 <option>Choose destination</option>
                                 
@@ -73,7 +73,7 @@
                                         airline</h4>
                                 </div>
                                 <h3>Flight ID:</h3>
-                                <p>${f.getID()}</p>
+                                <p>FMS-A0${f.getID()}</p>
                             </div>
                             <div class="flight-right">
                                 <div class="flight-travel">
@@ -107,7 +107,7 @@
                                         airline</h4>
                                 </div>
                                 <h3>Flight ID:</h3>
-                                <p>${f.getID()}</p>
+                                <p>FMS-A0${f.getID()}</p>
                             </div>
                             <div class="flight-right">
                                 <div class="flight-travel">

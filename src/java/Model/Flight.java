@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
  * @author Administrator
  */
 public class Flight {
-    private String ID, DeparturePlace,Destination;
+    private int ID;
+    private String DeparturePlace,Destination;
     private LocalDateTime DepartureDate;
     private int NumberOfSeats,MaxCargoWeight;
     private float Price;
@@ -20,7 +21,7 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(String ID, String DeparturePlace, String Destination, LocalDateTime DepartureDate, int NumberOfSeats, int MaxCargoWeight, float Price) {
+    public Flight(int ID, String DeparturePlace, String Destination, LocalDateTime DepartureDate, int NumberOfSeats, int MaxCargoWeight, float Price) {
         this.ID = ID;
         this.DeparturePlace = DeparturePlace;
         this.Destination = Destination;
@@ -30,11 +31,11 @@ public class Flight {
         this.Price = Price;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 

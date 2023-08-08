@@ -33,11 +33,12 @@ public class ViewFlightController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String ID = request.getParameter("ID");
+        int id = Integer.parseInt(ID);
         
         FlightDAO fd = new FlightDAO();
         Flight flight = new Flight();
         for(Flight f : fd.flightList){
-            if(f.getID().equals(ID)) flight = f;
+            if(f.getID()== id) flight = f;
         }
         
         TicketDAO td = new TicketDAO();

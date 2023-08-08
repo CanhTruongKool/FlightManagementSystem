@@ -53,7 +53,7 @@ public class FlightDAO {
                 int numberOfSeats = rs.getInt("NumberOfSeats");
                 int maxCargoWeight = rs.getInt("MaxCargoWeight");
                 float price = rs.getFloat("Price");
-                Flight f = new Flight("FMS-A0" + ID, departure, destination, departureDate, numberOfSeats, maxCargoWeight,price);
+                Flight f = new Flight(ID, departure, destination, departureDate, numberOfSeats, maxCargoWeight,price);
 
                 list.add(f);
             }
@@ -100,7 +100,7 @@ public class FlightDAO {
                 int numberOfSeats = rs.getInt("NumberOfSeats");
                 int maxCargoWeight = rs.getInt("MaxCargoWeight");
                 float price = rs.getFloat("Price");
-                Flight f = new Flight("FMS-A0" + ID, Departure, Destination, departureDate, numberOfSeats, maxCargoWeight,price);
+                Flight f = new Flight(ID, Departure, Destination, departureDate, numberOfSeats, maxCargoWeight,price);
 
                 list.add(f);
             }
