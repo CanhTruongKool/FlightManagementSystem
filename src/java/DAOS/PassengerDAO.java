@@ -19,9 +19,8 @@ import java.time.LocalDateTime;
  *
  * @author Administrator
  */
-public class PassengerDAO extends DataAccessObject{
-
-
+public class PassengerDAO extends DataAccessObject {
+    
     public PassengerDAO() {
     }
     
@@ -33,7 +32,7 @@ public class PassengerDAO extends DataAccessObject{
             String sql = "Insert into [dbo].[Customers]([Name],[PhoneNumber],[IdentifyNumber])"
                     + "values (?,?,?)";
             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
+            
             stmt.setString(1, name);
             stmt.setString(2, phone);
             stmt.setString(3, identifyNumber);
@@ -48,11 +47,11 @@ public class PassengerDAO extends DataAccessObject{
                     // Set other attributes if needed
                 }
             }
-
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
+        
         return passengerID;
     }
     
@@ -64,30 +63,52 @@ public class PassengerDAO extends DataAccessObject{
             String sql = "select ID, Name,PhoneNumber,IdentifyNumber from Customers "
                     + "where Name = ? AND IdentifyNumber = ? ";
             PreparedStatement stmt = connection.prepareStatement(sql);
-
+            
             stmt.setString(1, name);
             stmt.setString(2, identifyNumber);
-            System.out.println(name + " " + identifyNumber + " "+phone);
+            System.out.println(name + " " + identifyNumber + " " + phone);
             // get data from table 'tbl Ticket'
             // Thực hiện truy vấn
             ResultSet rs = stmt.executeQuery();
             // Execute the insert statement
             if (rs.next()) {
                 // Insert successful, retrieve the generated keys
-               passengerID = rs.getInt("ID");
+                passengerID = rs.getInt("ID");
             }
-
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
+        
         return passengerID;
     }
-
-
-
-    public static void main(String[] args) {
-        PassengerDAO pd = new PassengerDAO();
-        System.out.println(pd.getPassenger("NGUYEN VAN THANH", "0125772108", "012345677721"));
+    
+    public Passenger getPassengerFromID(int ID) {
+        Passenger result = new Passenger();
+        try {
+            // connnect to database 'FMS_FlightManagementSystem'
+            // crate statement
+            String sql = "select Name,PhoneNumber,IdentifyNumber from Customers "
+                    + "where id = ? ";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            
+            stmt.setInt(1, ID);
+            // get data from table 'tbl Ticket'
+            // Thực hiện truy vấn
+            ResultSet rs = stmt.executeQuery();
+            // Execute the insert statement
+            if (rs.next()) {
+                // Found Passenger
+                result.setName(rs.getString("Name"));
+                result.setPhoneNumber(rs.getString("PhoneNumber"));
+                result.setIdentityNumber(rs.getString("IdentifyNumber"));
+            }
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return result;
     }
+    
 }

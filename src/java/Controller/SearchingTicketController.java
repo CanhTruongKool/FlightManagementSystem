@@ -6,6 +6,11 @@
 package Controller;
 
 import DAOS.DataAccessObject;
+import DAOS.FlightDAO;
+import DAOS.PassengerDAO;
+import DAOS.TicketDAO;
+import Model.Flight;
+import Model.Passenger;
 import Model.Ticket;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -31,20 +36,28 @@ public class SearchingTicketController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        Ticket ticket = (Ticket) request.getAttribute("Ticket");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SearchingTicketController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Ticket information " + ticket.toString()+ "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String code = request.getParameter("Code");
+        System.out.println(code);
+        String searchResult = "";
+
+        TicketDAO td = new TicketDAO();
+        Ticket ticket = td.searchTicket(code);
+        PassengerDAO pd = new PassengerDAO();
+        FlightDAO fd=  new FlightDAO();
+        
+        if (ticket == null) {
+            searchResult = "Not found ticket";
+        } else {
+            searchResult = "Found ticket";
+            Passenger passenger = pd.getPassengerFromID(ticket.getPassengerID());
+            Flight flight = fd.searchFlightByID(ticket.getFlightID());
+            request.setAttribute("ticket", ticket);
+            request.setAttribute("flight", flight);
+            request.setAttribute("passenger", passenger);
         }
+        
+        request.setAttribute("searchResult", searchResult);
+        request.getRequestDispatcher("ticketSearching.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

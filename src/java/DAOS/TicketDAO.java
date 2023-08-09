@@ -50,11 +50,11 @@ public class TicketDAO extends DataAccessObject{
     }
 
     public Ticket searchTicket(String code) {
-        Ticket result = new Ticket();
+        Ticket result = null;
         try {
             // connnect to database 'FMS_FlightManagementSystem'
             // crate statement
-            String sql = "select FlightID,PassengerID,Code,Price from Tickets where Code = ?";
+            String sql = "select FlightID,PassengerID,Code from Tickets where Code = ?";
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, code); //FMS-A01
             // get data from table 'tbl Ticket'
@@ -65,8 +65,7 @@ public class TicketDAO extends DataAccessObject{
                 int flightID = rs.getInt("FlightID");
                 int passengerID = rs.getInt("PassengerID");
                 String Code = rs.getString("Code");
-                float price = rs.getFloat("Price");
-                result = new Ticket(flightID, passengerID, Code, price);
+                result = new Ticket(flightID, passengerID, Code);
             }
 
         } catch (Exception ex) {
@@ -76,14 +75,14 @@ public class TicketDAO extends DataAccessObject{
         return result;
     }
     
-     public Ticket createTicket(String FlightID,int PassengerID,String Code,float Price) {
+     public Ticket createTicket(String FlightID,int PassengerID,String Code) {
          Ticket result = new Ticket();
         try {
             // connnect to database 'FMS_FlightManagementSystem'
             // crate statement
             // get data from table 'tbl Ticket'
-            String sql = "Insert into [dbo].[Tickets]([FlightID],[PassengerID],[Code],[Price])"
-                    + "values (?,?,?,?)";
+            String sql = "Insert into [dbo].[Tickets]([FlightID],[PassengerID],[Code])"
+                    + "values (?,?,?)";
             // show data
              PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -91,7 +90,6 @@ public class TicketDAO extends DataAccessObject{
             stmt.setInt(2, PassengerID);
             System.out.println(PassengerID);
             stmt.setString(3, Code);
-            stmt.setFloat(4, Price);
             // get data from table 'tbl Ticket'
             // Execute the insert statement
             int affectedRows = stmt.executeUpdate();
@@ -99,7 +97,7 @@ public class TicketDAO extends DataAccessObject{
                 // Insert successful, retrieve the generated keys
                 ResultSet generatedKeys = stmt.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    result = new Ticket(Integer.parseInt(FlightID), PassengerID, Code, Price);
+                    result = new Ticket(Integer.parseInt(FlightID), PassengerID, Code);
                     // Set other attributes if needed
                 }
             }
@@ -109,10 +107,5 @@ public class TicketDAO extends DataAccessObject{
         }
 
         return result;
-    }
-
-    public static void main(String[] args) {
-        TicketDAO td = new TicketDAO();
-        System.out.println(td.searchTicket("aaa"));
     }
 }
