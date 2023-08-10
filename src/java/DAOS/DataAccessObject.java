@@ -11,7 +11,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class DataAccessObject implements Serializable{
+public class DataAccessObject implements Serializable {
     protected Connection connection;
     protected PreparedStatement preparedStatement;
     protected ResultSet resultSet;
@@ -20,8 +20,6 @@ public class DataAccessObject implements Serializable{
         connection = getConnection();
     }
 
-    
-    
     @Override
     protected void finalize() throws Throwable {
         closeConnection();

@@ -17,7 +17,7 @@ public class Admin {
     public Admin() {
     }
 
-    public Admin(int iD, String userName, String name, String password) {
+    public Admin(int iD, String userName, String password) {
         ID = iD;
         UserName = userName;
         Password = password;

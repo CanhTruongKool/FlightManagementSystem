@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAOS;
 
 import java.sql.SQLException;
@@ -11,17 +6,13 @@ import java.util.List;
 
 import Model.Crew;
 
-/**
- *
- * @author Administrator
- */
 public class CrewDAO extends DataAccessObject {
     public List<Crew> GetAll() throws SQLException {
         List<Crew> crews = new ArrayList<>();
         String sql = "Select ID, Name, PhoneNumber, Position From Crew";
         preparedStatement = connection.prepareStatement(sql);
         resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()){
+        while (resultSet.next()) {
             Crew crew = new Crew();
             crew.setID(resultSet.getInt("ID"));
             crew.setName(resultSet.getString("Name"));

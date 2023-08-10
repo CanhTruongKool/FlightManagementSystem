@@ -33,13 +33,14 @@ public class LoginController extends HttpServlet {
         try {
             Admin admin = new AdminDAO().Get(new LoginDTO(username, password));
             if (admin == null) {
-                response.sendError(401, "User name or password is invalid");
+                request.setAttribute("error", "User name or password is invalid");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
                 HttpSession session = request.getSession(true);
                 session.setMaxInactiveInterval(60);
                 session.setAttribute("username", admin.getUserName());
                 session.setAttribute("id", admin.getID());
-                response.sendRedirect("managementMenu.jsp");
+                response.sendRedirect("management");
             }
         } catch (SQLException e) {
             e.printStackTrace();
