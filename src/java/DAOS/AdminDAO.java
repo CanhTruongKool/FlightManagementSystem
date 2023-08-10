@@ -15,6 +15,7 @@ import Model.Admin;
  * @author Administrator
  */
 public class AdminDAO extends DataAccessObject{
+
     public Admin Get(LoginDTO loginDto) throws SQLException{
         Admin admin = new Admin();
         if (connection != null){

@@ -59,10 +59,6 @@
         <servlet-class>Controller.ViewProfileController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AddFlightController</servlet-name>
-        <servlet-class>Controller.AddFlightController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AddCrewListController</servlet-name>
         <servlet-class>Controller.AddCrewListController</servlet-class>
     </servlet>
@@ -165,10 +161,6 @@
     <servlet-mapping>
         <servlet-name>ViewProfileController</servlet-name>
         <url-pattern>/viewProfile</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddFlightController</servlet-name>
-        <url-pattern>/addFllight</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddCrewListController</servlet-name>

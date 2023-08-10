@@ -16,8 +16,11 @@
             <h3>Login</h3>
             <label for="username">User Name:</label>
             <input type="text" id="username" name="username">
+            <br>
             <label for="password">Password:</label>
             <input type="text" id="password" name="password">
+            <br>
+            <font style="color: red;">${requestScope.error}</font>
             <button type="submit">Login</button>
         </form>
     </body>
