@@ -122,18 +122,39 @@ public class FlightDAO extends DataAccessObject{
         return resultList;
     }
 
-    
-    public static Connection getConnection(String dbURL, String userName,
-            String password) {
-        Connection conn = null;
+    public Flight searchFlightByID(int FlightID) {
+        Flight result = new Flight();
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conn = DriverManager.getConnection(dbURL, userName, password);
+            // connnect to database 'FMS_FlightManagementSystem'
+            // crate statement
+            // get data from table 'tbl Flight'
+            String sql = "select ID, DeparturePlace,Destination,DepartureDate,NumberOfSeats,MaxCargoWeight,Price "
+                    + "from Flights where ID = ? ";
+
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, FlightID);
+
+            // Thực hiện truy vấn
+            ResultSet rs = statement.executeQuery();
+            // show data
+
+            while (rs.next()) {
+                int ID = rs.getInt("ID");
+                String Departure = rs.getString("DeparturePlace");
+                String Destination = rs.getString("Destination");
+                LocalDateTime departureDate = rs.getTimestamp("DepartureDate").toLocalDateTime();
+                int numberOfSeats = rs.getInt("NumberOfSeats");
+                int maxCargoWeight = rs.getInt("MaxCargoWeight");
+                float price = rs.getFloat("Price");
+                result = new Flight(ID, Departure, Destination, departureDate, numberOfSeats, maxCargoWeight,price);
+
+            }
         } catch (Exception ex) {
-            System.out.println("connect failure!");
             ex.printStackTrace();
         }
-        return conn;
+
+        return result;
     }
 
 }

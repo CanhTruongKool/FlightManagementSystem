@@ -34,7 +34,7 @@
                 <h4><label for="">Enter your Identity card number</label> <input type="tel" name="identifyNumber" pattern="[0-9]{12}"></h4>
                 <h4><label for="">Enter your name:</label> <input name="name" type="text"></h4>
                 <h4><label for="phone">Enter your phone number:</label><input type="tel" id="phone" name="phone" pattern="[0-9]{10}"></h4>
-                <h4> <label for="">Flight Price </label> <input name="flightPrice" value="${f.getPrice()}" readonly="readonly">VND</h4>
+                <h4> <label>Flight Price: </label>${f.getPrice()}VND</h4>
                 <button onclick=""> Buy </button>
                 <button onclick="closeFormTicket(event)"> Close Form </button>
             </form>
