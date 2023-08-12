@@ -13,7 +13,7 @@ import Model.Flight;
 public class FlightDAO extends DataAccessObject {
 
     public ArrayList<Flight> flightList;
-    
+
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     // LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
@@ -25,8 +25,8 @@ public class FlightDAO extends DataAccessObject {
         ArrayList<Flight> list = new ArrayList<>();
         try {
             // connnect to database 'FMS_FlightManagementSystem'
-        
-          String sql ="select ID, DeparturePlace,Destination,DepartureDate,NumberOfSeats,MaxCargoWeight,Price from Flights";
+
+            String sql = "select ID,  DeparturePlace, DepartureDate, Destination, NumberOfSeats, MaxCargoWeight, Price, CreatedBy, CreatedTime, ModifiedBy, LastModifiedTime, IsActivity from Flights";
             // crate statement
             preparedStatement = connection.prepareStatement(sql);
             // get data from table 'tbl Flight'
@@ -49,7 +49,7 @@ public class FlightDAO extends DataAccessObject {
             // connnect to database 'FMS_FlightManagementSystem'
             // crate statement
             // get data from table 'tbl Flight'
-            String sql = "select ID, DeparturePlace,Destination,DepartureDate,NumberOfSeats,MaxCargoWeight,Price "
+            String sql = "select ID, DeparturePlace, DepartureDate, Destination, NumberOfSeats, MaxCargoWeight, Price, CreatedBy, CreatedTime, ModifiedBy, LastModifiedTime, IsActivity "
                     + "from Flights where DeparturePlace = ? AND Destination = ? AND "
                     + "DepartureDate >= ? AND DepartureDate < ? ";;
 
@@ -58,16 +58,16 @@ public class FlightDAO extends DataAccessObject {
             // Parse the date string to a LocalDateTime object with time set to 23:59:59
             LocalDateTime endDate = LocalDateTime.parse(date + "T23:59:59");
 
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, departure.trim());
-            statement.setString(2,destination.trim());
-            statement.setTimestamp(3, Timestamp.valueOf(startDate));
-            statement.setTimestamp(4, Timestamp.valueOf(endDate));
+            preparedStatement  = connection.prepareStatement(sql);
+            preparedStatement.setString(1, departure.trim());
+            preparedStatement.setString(2, destination.trim());
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(startDate));
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(endDate));
             // Thực hiện truy vấn
-            ResultSet rs = statement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             // show data
 
-            while (rs.next()) {
+            while (resultSet.next()) {
                 list.add(getEntity());
             }
         } catch (Exception ex) {
@@ -93,9 +93,9 @@ public class FlightDAO extends DataAccessObject {
         return resultList;
     }
 
-
-    public Flight addFlight(Flight flight) throws SQLException{
-        String sql = "INSERT INTO Flights\r\n" + //
+    public Flight addFlight(Flight flight) throws SQLException {
+        String sql = "INSERT INTO Flights\r\n"
+                + //
                 "(DeparturePlace, DepartureDate, Destination, NumberOfSeats, MaxCargoWeight, Price, CreatedBy, CreatedTime, ModifiedBy, LastModifiedTime, IsActivity)\r\n"
                 + //
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -114,6 +114,7 @@ public class FlightDAO extends DataAccessObject {
 
         preparedStatement.executeUpdate();
         return flight;
+    }
 
     public Flight searchFlightByID(int FlightID) {
         Flight result = new Flight();
@@ -121,9 +122,8 @@ public class FlightDAO extends DataAccessObject {
             // connnect to database 'FMS_FlightManagementSystem'
             // crate statement
             // get data from table 'tbl Flight'
-            String sql = "select ID, DeparturePlace,Destination,DepartureDate,NumberOfSeats,MaxCargoWeight,Price "
+            String sql = "select ID, DeparturePlace, DepartureDate, Destination, NumberOfSeats, MaxCargoWeight, Price, CreatedBy, CreatedTime, ModifiedBy, LastModifiedTime, IsActivity "
                     + "from Flights where ID = ? ";
-
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, FlightID);
@@ -140,7 +140,12 @@ public class FlightDAO extends DataAccessObject {
                 int numberOfSeats = rs.getInt("NumberOfSeats");
                 int maxCargoWeight = rs.getInt("MaxCargoWeight");
                 float price = rs.getFloat("Price");
-                result = new Flight(ID, Departure, Destination, departureDate, numberOfSeats, maxCargoWeight,price);
+                int createdBy = resultSet.getInt("CreatedBy");
+                LocalDateTime createdTime = resultSet.getTimestamp("CreatedTime").toLocalDateTime();
+                int modifiedBy = resultSet.getInt("ModifiedBy");
+                LocalDateTime lastModifiedTime = resultSet.getTimestamp("LastModifiedTime").toLocalDateTime();
+                int isActivity = resultSet.getInt("IsActivity");
+                result = new Flight(createdBy, createdTime, modifiedBy, lastModifiedTime, isActivity, ID, Departure, Destination, departureDate, numberOfSeats, maxCargoWeight, price);
 
             }
         } catch (Exception ex) {

@@ -28,7 +28,7 @@
         </div>
         <div class="nav-item">
             <p>Management Mode</p>
-            <a class="nav-icon" href="login.jsp">
+            <a class="nav-icon" href="login">
                 <i class="fa fa-wrench" aria-hidden="true"></i>
             </a>
         </div>

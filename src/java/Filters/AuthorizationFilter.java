@@ -38,7 +38,8 @@ public class AuthorizationFilter implements Filter {
                 "changeticket",
                 "bookingCargo",
                 "editTicket",
-                "refundTicket"
+                "refundTicket",
+                "ticketSearching"
         };
     }
 
