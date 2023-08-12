@@ -8,6 +8,7 @@
             <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Controller/BookingTicketController.java</file>
             <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Controller/ViewTransactionController.java</file>
             <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Filters/AuthorizationFilter.java</file>
+            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/DAOS/FlightDAO.java</file>
             <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/web/flightDetail.jsp</file>
         </group>
     </open-files>

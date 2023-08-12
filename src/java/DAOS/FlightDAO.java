@@ -125,21 +125,21 @@ public class FlightDAO extends DataAccessObject {
             String sql = "select ID, DeparturePlace, DepartureDate, Destination, NumberOfSeats, MaxCargoWeight, Price, CreatedBy, CreatedTime, ModifiedBy, LastModifiedTime, IsActivity "
                     + "from Flights where ID = ? ";
 
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, FlightID);
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, FlightID);
 
             // Thực hiện truy vấn
-            ResultSet rs = statement.executeQuery();
+            resultSet =  preparedStatement.executeQuery();
             // show data
 
-            while (rs.next()) {
-                int ID = rs.getInt("ID");
-                String Departure = rs.getString("DeparturePlace");
-                String Destination = rs.getString("Destination");
-                LocalDateTime departureDate = rs.getTimestamp("DepartureDate").toLocalDateTime();
-                int numberOfSeats = rs.getInt("NumberOfSeats");
-                int maxCargoWeight = rs.getInt("MaxCargoWeight");
-                float price = rs.getFloat("Price");
+            while (resultSet.next()) {
+                int ID = resultSet.getInt("ID");
+                String Departure = resultSet.getString("DeparturePlace");
+                String Destination = resultSet.getString("Destination");
+                LocalDateTime departureDate = resultSet.getTimestamp("DepartureDate").toLocalDateTime();
+                int numberOfSeats = resultSet.getInt("NumberOfSeats");
+                int maxCargoWeight = resultSet.getInt("MaxCargoWeight");
+                float price = resultSet.getFloat("Price");
                 int createdBy = resultSet.getInt("CreatedBy");
                 LocalDateTime createdTime = resultSet.getTimestamp("CreatedTime").toLocalDateTime();
                 int modifiedBy = resultSet.getInt("ModifiedBy");
