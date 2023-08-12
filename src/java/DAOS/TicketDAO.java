@@ -21,8 +21,7 @@ import java.util.ArrayList;
  *
  * @author Administrator
  */
-public class TicketDAO extends DataAccessObject{
-
+public class TicketDAO extends DataAccessObject {
 
     public TicketDAO() {
     }
@@ -74,9 +73,37 @@ public class TicketDAO extends DataAccessObject{
 
         return result;
     }
-    
-     public Ticket createTicket(String FlightID,int PassengerID,String Code) {
-         Ticket result = new Ticket();
+
+    public ArrayList<Ticket> searchTicketByPassenger(String passengerIdentifyNumber) {
+        ArrayList<Ticket> result = new ArrayList<>();
+        try {
+            // connnect to database 'FMS_FlightManagementSystem'
+            // crate statement
+            String sql = "select FlightID, PassengerID , Code"
+                    + " from Tickets, Customers where IdentifyNumber = ? ";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, passengerIdentifyNumber); 
+            // get data from table 'tbl Ticket'
+            ResultSet rs = stmt.executeQuery();
+            // show data
+
+            while (rs.next()) {
+                int flightID = rs.getInt("FlightID");
+                int passengerID = rs.getInt("PassengerID");
+                String Code = rs.getString("Code");
+                Ticket t = new Ticket(flightID, passengerID, Code);
+                result.add(t);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public Ticket createTicket(String FlightID, int PassengerID, String Code) {
+        Ticket result = new Ticket();
         try {
             // connnect to database 'FMS_FlightManagementSystem'
             // crate statement
@@ -84,7 +111,7 @@ public class TicketDAO extends DataAccessObject{
             String sql = "Insert into [dbo].[Tickets]([FlightID],[PassengerID],[Code])"
                     + "values (?,?,?)";
             // show data
-             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             stmt.setString(1, FlightID);
             stmt.setInt(2, PassengerID);

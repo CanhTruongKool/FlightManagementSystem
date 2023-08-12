@@ -37,7 +37,6 @@ public class SearchingTicketController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String code = request.getParameter("Code");
-        System.out.println(code);
         String searchResult = "";
 
         TicketDAO td = new TicketDAO();
