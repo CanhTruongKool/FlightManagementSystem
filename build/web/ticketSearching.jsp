@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,12 +29,55 @@
             <%@include file="header.jsp" %>
         </header>
         <div class="content">
-            <div>    
-                <h3 style="color: white; margin-left: 55%;">Enter your ticket ID <input></h3>
-                <div class="search-button">
-                    <button id="search" style="margin-top: -20px">Search <i class="fa fa-search" aria-hidden="true"></i></button>
+            <form  class="flight-box" action="ticketSearching" method='post'>
+                <div class="search-bar">
+                    <div class="search-bar-item1">
+                        <p>Enter ticket code: </p> 
+                        <input name="Code">
+                    </div>
+                    <div class="search-button">
+                        <button id="search">Search <i class="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
                 </div>
-            </div>
+            </form>
+            <h3 style="color: white">${requestScope.searchResult}</h3>
+            <c:set var = "f" scope = "request" value = "${requestScope.ticket}"/>
+            <c:if test = "${f != null}">
+                <div class="flight">
+                    <div class="flight-right">
+                        <div class="flight-right-content">
+                            <h4>Flight ID:<p>FMS-A0${f.getFlightID()} <p></h4>
+                        </div>
+                        <div class="flight-right-content">
+                            <h4>Departure from: <p>${requestScope.flight.getDeparturePlace()} <p></h4>
+                        </div>
+                        <div class="flight-right-content">
+                            <h4>Destination :<p>${requestScope.flight.getDestination()} <p></h4>
+                        </div>
+                        <div class="flight-right-content">
+                            <h4>Date/Time <p>${requestScope.flight.getDepartureDate().toString().replace("T", " AT ")} <p></h4>
+                        </div>
+                        <div class="flight-travel">
+                            <div class="flight-right-content">
+                                <h4>Passenger name: <p> ${requestScope.passenger.getName()}</p></h4>
+                            </div>
+                             <div class="flight-right-content">
+                                <h4>Passenger phone: <p> ${requestScope.passenger.getPhoneNumber()}</p></h4>
+                            </div>
+                             <div class="flight-right-content">
+                                <h4>Passenger ID:<p> ${requestScope.passenger.getIdentityNumber()}</p></h4>
+                            </div>
+                            <div class="flight-right-content">
+                                <h4>Code: <p> ${f.getCode()} <p></h4>
+                            </div>
+                            <div class="flight-right-content">
+                                <h4>Price: <p> ${requestScope.flight.getPrice()} <p></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:if>
         </div>
+
     </body>
 </html>

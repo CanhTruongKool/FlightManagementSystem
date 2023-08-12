@@ -5,8 +5,15 @@
  */
 package Controller;
 
+import DAOS.FlightDAO;
+import DAOS.PassengerDAO;
+import DAOS.TicketDAO;
+import Model.Flight;
+import Model.Passenger;
+import Model.Ticket;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,19 +36,21 @@ public class ViewTransactionController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ViewTransactionController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ViewTransactionController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String ID = request.getParameter("ID");
+        String searchResult = "";
+
+        TicketDAO td = new TicketDAO();
+        ArrayList<Ticket> tickets = td.searchTicketByPassenger(ID);
+        
+        if (tickets == null) {
+            searchResult = "Not found any transaction";
+        } else {
+            searchResult = "Found transactions:";
+            request.setAttribute("tickets", tickets);
         }
+        
+        request.setAttribute("searchResult", searchResult);
+        request.getRequestDispatcher("transactionList.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -40,46 +41,55 @@ public class BookingTicketController extends HttpServlet {
         String name = request.getParameter("name");
         String identifyNumber = request.getParameter("identifyNumber");
         String phone = request.getParameter("phone");
-        String price = request.getParameter("flightPrice");
-        float Price = Float.parseFloat(price);
         PassengerDAO pd = new PassengerDAO();
         int passenger = pd.getPassenger(name, identifyNumber, phone);
         System.out.println(passenger);
-        if(passenger==0) passenger = pd.CreatePassenger(name, identifyNumber, phone);
+        if (passenger == 0) {
+            passenger = pd.CreatePassenger(name, identifyNumber, phone);
+        }
         TicketDAO td = new TicketDAO();
-        Ticket ticket = td.createTicket(FlightID, passenger,shortenHash(hashString(FlightID+ "abc" +passenger), 6),Price);
-        
-        request.setAttribute("Ticket", ticket);
-        request.getRequestDispatcher("ticketSearching").forward(request, response);
+        Ticket ticket = td.createTicket(FlightID, passenger,
+     shortenHash(hashString(FlightID +generateRandomNumber() + shortenHash(hashString(name), 3) + passenger), 6));
+
+        response.sendRedirect("ticketSearching?Code="+ticket.getCode());
     }
-    
-     public String hashingTicketID(String ID) {
+
+    public String hashingTicketID(String ID) {
         return shortenHash(hashString(ID), 6);
     }
-    
+
     public static String hashString(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hashBytes = md.digest(input.getBytes());
-            
+
             StringBuilder hashString = new StringBuilder();
             for (byte b : hashBytes) {
                 hashString.append(String.format("%02x", b));
             }
-            
+
             return hashString.toString();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return "";
     }
-    
+
     public static String shortenHash(String hash, int length) {
         if (hash.length() < length) {
             return hash;
         }
-        return hash.substring(0, length);
+        return hash.substring(7, length + 7);
     }
+    
+    public static int generateRandomNumber() {
+        Random random = new Random();
+        int min = 1;
+        int max = 500;
+        int randomNumber = random.nextInt(max - min + 1) + min;
+        return randomNumber;
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

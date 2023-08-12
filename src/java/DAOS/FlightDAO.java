@@ -93,6 +93,7 @@ public class FlightDAO extends DataAccessObject {
         return resultList;
     }
 
+
     public Flight addFlight(Flight flight) throws SQLException{
         String sql = "INSERT INTO Flights\r\n" + //
                 "(DeparturePlace, DepartureDate, Destination, NumberOfSeats, MaxCargoWeight, Price, CreatedBy, CreatedTime, ModifiedBy, LastModifiedTime, IsActivity)\r\n"
@@ -113,6 +114,41 @@ public class FlightDAO extends DataAccessObject {
 
         preparedStatement.executeUpdate();
         return flight;
+
+    public Flight searchFlightByID(int FlightID) {
+        Flight result = new Flight();
+        try {
+            // connnect to database 'FMS_FlightManagementSystem'
+            // crate statement
+            // get data from table 'tbl Flight'
+            String sql = "select ID, DeparturePlace,Destination,DepartureDate,NumberOfSeats,MaxCargoWeight,Price "
+                    + "from Flights where ID = ? ";
+
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, FlightID);
+
+            // Thực hiện truy vấn
+            ResultSet rs = statement.executeQuery();
+            // show data
+
+            while (rs.next()) {
+                int ID = rs.getInt("ID");
+                String Departure = rs.getString("DeparturePlace");
+                String Destination = rs.getString("Destination");
+                LocalDateTime departureDate = rs.getTimestamp("DepartureDate").toLocalDateTime();
+                int numberOfSeats = rs.getInt("NumberOfSeats");
+                int maxCargoWeight = rs.getInt("MaxCargoWeight");
+                float price = rs.getFloat("Price");
+                result = new Flight(ID, Departure, Destination, departureDate, numberOfSeats, maxCargoWeight,price);
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return result;
+
     }
 
     private Flight getEntity() throws SQLException {

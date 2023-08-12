@@ -12,16 +12,14 @@ package Model;
 public class Ticket {
     private int FlightID,PassengerID;
     private String Code;
-    private float Price;
 
     public Ticket() {
     }
 
-    public Ticket(int FlightID, int PassengerID, String Code, float Price) {
+    public Ticket(int FlightID, int PassengerID, String Code) {
         this.FlightID = FlightID;
         this.PassengerID = PassengerID;
         this.Code = Code;
-        this.Price = Price;
     }
 
     public int getFlightID() {
@@ -48,17 +46,11 @@ public class Ticket {
         this.Code = Code;
     }
 
-    public float getPrice() {
-        return Price;
-    }
 
-    public void setPrice(float Price) {
-        this.Price = Price;
-    }
 
     @Override
     public String toString() {
-        return "Ticket{" + "FlightID=" + FlightID + ", PassengerID=" + PassengerID + ", Code=" + Code + ", Price=" + Price + '}';
+        return "Ticket{" + "FlightID=" + FlightID + ", PassengerID=" + PassengerID + ", Code=" + Code + '}';
     }
     
     
