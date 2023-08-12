@@ -1,17 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
 
 import java.time.LocalDateTime;
 
-/**
- *
- * @author Administrator
- */
-public class Flight {
+public class Flight extends Audit{
     private int ID;
     private String DeparturePlace,Destination;
     private LocalDateTime DepartureDate;
@@ -21,14 +12,17 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(int ID, String DeparturePlace, String Destination, LocalDateTime DepartureDate, int NumberOfSeats, int MaxCargoWeight, float Price) {
-        this.ID = ID;
-        this.DeparturePlace = DeparturePlace;
-        this.Destination = Destination;
-        this.DepartureDate = DepartureDate;
-        this.NumberOfSeats = NumberOfSeats;
-        this.MaxCargoWeight = MaxCargoWeight;
-        this.Price = Price;
+    public Flight(int createdBy, LocalDateTime createdTime, int modifiedBy, LocalDateTime lastModifiedTime,
+            int isActivity, int iD, String departurePlace, String destination, LocalDateTime departureDate,
+            int numberOfSeats, int maxCargoWeight, float price) {
+        super(createdBy, createdTime, modifiedBy, lastModifiedTime, isActivity);
+        ID = iD;
+        DeparturePlace = departurePlace;
+        Destination = destination;
+        DepartureDate = departureDate;
+        NumberOfSeats = numberOfSeats;
+        MaxCargoWeight = maxCargoWeight;
+        Price = price;
     }
 
     public int getID() {
@@ -91,7 +85,4 @@ public class Flight {
     public String toString() {
         return "Flight{" + "ID=" + ID + ", DeparturePlace=" + DeparturePlace + ", Destination=" + Destination + ", DepartureDate=" + DepartureDate + ", NumberOfSeats=" + NumberOfSeats + ", MaxCargoWeight=" + MaxCargoWeight + ", Price=" + Price + '}';
     }
-
-    
-  
 }

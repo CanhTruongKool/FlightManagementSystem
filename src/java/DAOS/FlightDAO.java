@@ -1,34 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAOS;
 
-import Model.Flight;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-/**
- *
- * @author Administrator
- */
-public class FlightDAO extends DataAccessObject{
-    
-    public ArrayList<Flight> flightList = readData();
 
+import Model.Flight;
+
+public class FlightDAO extends DataAccessObject {
+
+    public ArrayList<Flight> flightList;
+    
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     // LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
     public FlightDAO() {
+        flightList = readData();
     }
 
     public ArrayList<Flight> readData() {
@@ -38,22 +28,12 @@ public class FlightDAO extends DataAccessObject{
         
           String sql ="select ID, DeparturePlace,Destination,DepartureDate,NumberOfSeats,MaxCargoWeight,Price from Flights";
             // crate statement
-            PreparedStatement stmt = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(sql);
             // get data from table 'tbl Flight'
-            ResultSet rs = stmt.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             // show data
-
-            while (rs.next()) {
-                int ID = rs.getInt("ID");
-                String departure = rs.getString("DeparturePlace");
-                String destination = rs.getString("Destination");
-                LocalDateTime departureDate = rs.getTimestamp("DepartureDate").toLocalDateTime();
-                int numberOfSeats = rs.getInt("NumberOfSeats");
-                int maxCargoWeight = rs.getInt("MaxCargoWeight");
-                float price = rs.getFloat("Price");
-                Flight f = new Flight(ID, departure, destination, departureDate, numberOfSeats, maxCargoWeight,price);
-
-                list.add(f);
+            while (resultSet.next()) {
+                list.add(getEntity());
             }
 
         } catch (Exception ex) {
@@ -88,16 +68,7 @@ public class FlightDAO extends DataAccessObject{
             // show data
 
             while (rs.next()) {
-                int ID = rs.getInt("ID");
-                String Departure = rs.getString("DeparturePlace");
-                String Destination = rs.getString("Destination");
-                LocalDateTime departureDate = rs.getTimestamp("DepartureDate").toLocalDateTime();
-                int numberOfSeats = rs.getInt("NumberOfSeats");
-                int maxCargoWeight = rs.getInt("MaxCargoWeight");
-                float price = rs.getFloat("Price");
-                Flight f = new Flight(ID, Departure, Destination, departureDate, numberOfSeats, maxCargoWeight,price);
-
-                list.add(f);
+                list.add(getEntity());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -107,7 +78,7 @@ public class FlightDAO extends DataAccessObject{
     }
 
     public ArrayList<Flight> getFlight(int start, int end) {
-        ArrayList<Flight> resultList = new ArrayList();
+        ArrayList<Flight> resultList = new ArrayList<>();
         for (int i = start; i < end; i++) {
             resultList.add(readData().get(i));
         }
@@ -115,12 +86,34 @@ public class FlightDAO extends DataAccessObject{
     }
 
     public ArrayList<Flight> getSearchFlight(String departure, String destination, String date, int start, int end) {
-        ArrayList<Flight> resultList = new ArrayList();
+        ArrayList<Flight> resultList = new ArrayList<>();
         for (int i = start; i < end; i++) {
             resultList.add(searchFlight(departure, destination, date).get(i));
         }
         return resultList;
     }
+
+
+    public Flight addFlight(Flight flight) throws SQLException{
+        String sql = "INSERT INTO Flights\r\n" + //
+                "(DeparturePlace, DepartureDate, Destination, NumberOfSeats, MaxCargoWeight, Price, CreatedBy, CreatedTime, ModifiedBy, LastModifiedTime, IsActivity)\r\n"
+                + //
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, flight.getDeparturePlace());
+        preparedStatement.setTimestamp(2, Timestamp.valueOf(flight.getDepartureDate()));
+        preparedStatement.setString(3, flight.getDestination());
+        preparedStatement.setInt(4, flight.getNumberOfSeats());
+        preparedStatement.setInt(5, flight.getMaxCargoWeight());
+        preparedStatement.setFloat(6, flight.getPrice());
+        preparedStatement.setInt(7, flight.getCreatedBy());
+        preparedStatement.setTimestamp(8, Timestamp.valueOf(flight.getCreatedTime()));
+        preparedStatement.setInt(9, flight.getModifiedBy());
+        preparedStatement.setTimestamp(10, Timestamp.valueOf(flight.getLastModifiedTime()));
+        preparedStatement.setInt(11, flight.getIsActivity());
+
+        preparedStatement.executeUpdate();
+        return flight;
 
     public Flight searchFlightByID(int FlightID) {
         Flight result = new Flight();
@@ -155,6 +148,23 @@ public class FlightDAO extends DataAccessObject{
         }
 
         return result;
+
     }
 
+    private Flight getEntity() throws SQLException {
+        int ID = resultSet.getInt("ID");
+        String _departure = resultSet.getString("DeparturePlace");
+        String _destination = resultSet.getString("Destination");
+        LocalDateTime departureDate = resultSet.getTimestamp("DepartureDate").toLocalDateTime();
+        int numberOfSeats = resultSet.getInt("NumberOfSeats");
+        int maxCargoWeight = resultSet.getInt("MaxCargoWeight");
+        float price = resultSet.getFloat("Price");
+        int createdBy = resultSet.getInt("CreatedBy");
+        LocalDateTime createdTime = resultSet.getTimestamp("CreatedTime").toLocalDateTime();
+        int modifiedBy = resultSet.getInt("ModifiedBy");
+        LocalDateTime lastModifiedTime = resultSet.getTimestamp("LastModifiedTime").toLocalDateTime();
+        int isActivity = resultSet.getInt("IsActivity");
+        return new Flight(createdBy, createdTime, modifiedBy, lastModifiedTime, isActivity, ID, _departure,
+                _destination, departureDate, numberOfSeats, maxCargoWeight, price);
+    }
 }

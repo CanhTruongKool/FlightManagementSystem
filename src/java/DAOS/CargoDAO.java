@@ -9,6 +9,6 @@ package DAOS;
  *
  * @author Administrator
  */
-public class CargoDAO {
+public class CargoDAO extends DataAccessObject{
     
 }
