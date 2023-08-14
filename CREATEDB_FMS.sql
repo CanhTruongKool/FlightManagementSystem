@@ -83,6 +83,7 @@ CREATE TABLE FlightCargo
 	FlightID int FOREIGN KEY REFERENCES Flights(ID),
 	PassengerID int FOREIGN KEY REFERENCES Customers(ID),
 	Category varchar(20),
+	Code varchar(30) UNIQUE not null,
 	[Weight] float DEFAULT 20, 
 	Price float DEFAULT 0,
 	ByTime datetime DEFAULT GETDATE(),
