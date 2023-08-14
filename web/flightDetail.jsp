@@ -77,14 +77,19 @@
                         <h4>Total weight : </h4>
                         <p style="font-size: 24px;"> ${f.getMaxCargoWeight()}</p>
                     </div>
-                      <div class="flight-right-content">
+                    <div class="flight-right-content">
                         <h4>Price : </h4>
                         <p style="font-size: 24px;"> ${f.getPrice()}</p>
                     </div>
                 </div>
             </div>
-
-            <button id="TicketButton" onclick="openFormTicket()">Book Ticket</button>
+            <c:set var = "canBuy" scope = "request" value = "${f.getNumberOfSeats()-requestScope.NumberOfSeats}"/>  
+            <c:if test = "${canBuy > 0}">
+                <button id="TicketButton" onclick="openFormTicket()">Book Ticket</button>
+            </c:if>
+            <c:if test = "${canBuy <= 0}">
+                <h4 style="color:white">This flight has fully booked</h4>
+            </c:if>
             <button id="CargoButton">Book Cargo Shipment</button>
         </div>
         <script>
@@ -100,8 +105,8 @@
                     cargoButton.style.display = "none";
                 }
             }
-            
-            function closeFormTicket(event){
+
+            function closeFormTicket(event) {
                 event.preventDefault();
                 if (ticketForm.style.display != "none")
                 {

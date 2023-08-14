@@ -30,9 +30,8 @@ public class TicketDAO extends DataAccessObject {
         int result = 0;
         try {
 
-            String sql = "select count(*) from Tickets where FlightID = ?";
+            String sql = "select count(*) from Tickets where FlightID = ? and IsCancelled = 0";
             PreparedStatement stmt = connection.prepareStatement(sql);
-            System.out.println(FlightID);
             stmt.setString(1, FlightID); //FMS-A01
             // get data from table 'tbl Ticket'
             ResultSet rs = stmt.executeQuery();
@@ -45,6 +44,66 @@ public class TicketDAO extends DataAccessObject {
             ex.printStackTrace();
         }
 
+        return result;
+    }
+
+    public void RefundTicket(String Code) {
+        LocalDateTime now = LocalDateTime.now();
+        try {
+
+            String sql = "update Tickets set IsCancelled = 1, ModifiedTime = ? where Code = ? ";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            
+            // Set the ModifiedTime as a Timestamp
+            Timestamp timestamp = Timestamp.valueOf(now);
+            stmt.setTimestamp(1, timestamp);
+            
+            stmt.setString(2, Code); //FMS-A01
+            // get data from table 'tbl Ticket'
+            stmt.executeUpdate();
+            // show data
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void editTicket(String Code, int PassengerID) {
+        LocalDateTime now  = LocalDateTime.now();
+        try {
+
+            String sql = "update Tickets set PassengerID = ?,ModifiedTime = ?  where Code = ? ";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            
+            stmt.setInt(1, PassengerID); //FMS-A01
+            // Set the ModifiedTime as a Timestamp
+            Timestamp timestamp = Timestamp.valueOf(now);
+            stmt.setTimestamp(2, timestamp);
+            stmt.setString(3, Code);
+            // get data from table 'tbl Ticket'
+            stmt.executeUpdate();
+            // show data
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public int getTicketStatus(String Code) {
+        int result = 0;
+        try {
+            String sql = "Select IsCancelled from Tickets where Code = ? ";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, Code); //FMS-A01
+            // get data from table 'tbl Ticket'
+            ResultSet rs = stmt.executeQuery();
+            // show data
+
+            if (rs.next()) {
+                result = rs.getInt(1); // Lấy giá trị từ cột đầu tiên của kết quả truy vấn
+            }
+            // show data
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         return result;
     }
 
@@ -82,7 +141,7 @@ public class TicketDAO extends DataAccessObject {
             String sql = "select FlightID, PassengerID , Code"
                     + " from Tickets, Customers where IdentifyNumber = ? ";
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, passengerIdentifyNumber); 
+            stmt.setString(1, passengerIdentifyNumber);
             // get data from table 'tbl Ticket'
             ResultSet rs = stmt.executeQuery();
             // show data

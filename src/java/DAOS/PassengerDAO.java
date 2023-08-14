@@ -64,9 +64,9 @@ public class PassengerDAO extends DataAccessObject {
                     + "where Name = ? AND IdentifyNumber = ? ";
             PreparedStatement stmt = connection.prepareStatement(sql);
             
-            stmt.setString(1, name);
-            stmt.setString(2, identifyNumber);
-            System.out.println(name + " " + identifyNumber + " " + phone);
+            stmt.setString(1,name.trim());
+            stmt.setString(2,identifyNumber.trim());
+        //    System.out.println(name + " " + identifyNumber + " " + phone);
             // get data from table 'tbl Ticket'
             // Thực hiện truy vấn
             ResultSet rs = stmt.executeQuery();
@@ -81,6 +81,21 @@ public class PassengerDAO extends DataAccessObject {
         }
         
         return passengerID;
+    }
+    
+    public void editPassenger(String Name, String identifyNumber) {
+        try {
+
+            String sql = "update Customers set Name = ? where IdentifyNumber = ? ";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, Name.trim()); //FMS-A01
+            stmt.setString(2, identifyNumber.trim());
+            // get data from table 'tbl Ticket'
+            stmt.executeUpdate();
+            // show data
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     
     public Passenger getPassengerFromID(int ID) {
@@ -111,4 +126,30 @@ public class PassengerDAO extends DataAccessObject {
         return result;
     }
     
+    public int getPassengerByIdentifyNumber(String identifyNumber) {
+        int passengerID = 0;
+        try {
+            // connnect to database 'FMS_FlightManagementSystem'
+            // crate statement
+            String sql = "select ID, Name,PhoneNumber,IdentifyNumber from Customers "
+                    + "where IdentifyNumber = ? ";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            
+            stmt.setString(1,identifyNumber.trim());
+        //    System.out.println(name + " " + identifyNumber + " " + phone);
+            // get data from table 'tbl Ticket'
+            // Thực hiện truy vấn
+            ResultSet rs = stmt.executeQuery();
+            // Execute the insert statement
+            if (rs.next()) {
+                // Insert successful, retrieve the generated keys
+                passengerID = rs.getInt("ID");
+            }
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return passengerID;
+    }
 }

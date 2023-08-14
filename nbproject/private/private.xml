@@ -3,13 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Model/Flight.java</file>
-            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Controller/HomeController.java</file>
-            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Controller/BookingTicketController.java</file>
-            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Controller/ViewTransactionController.java</file>
-            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Filters/AuthorizationFilter.java</file>
-            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/DAOS/FlightDAO.java</file>
-            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/web/flightDetail.jsp</file>
+            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Controller/EditTicketController.java</file>
+            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/web/ticketSearching.jsp</file>
+            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Controller/RefundTicketController.java</file>
+            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/DAOS/TicketDAO.java</file>
+            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/DAOS/PassengerDAO.java</file>
         </group>
     </open-files>
 </project-private>
