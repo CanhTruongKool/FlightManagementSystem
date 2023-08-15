@@ -38,6 +38,9 @@
                     <div class="search-button">
                         <button id="search">Search <i class="fa fa-search" aria-hidden="true"></i></button>
                     </div>
+                    <div class="search-button">
+                        <button id="cargo"> <a style="color: white; align-items: flex-start" href="cargoSearching.jsp">Cargo</a></button>
+                    </div>
                 </div>
             </form>
             <h3 style="color: white">${requestScope.searchResult}</h3>
@@ -81,10 +84,10 @@
                             </form>
                             <h4><button id="editButton" onclick="openEdit()" >Edit Ticket</button></h4>
                             <div class="flight-right-content">
-                                <h4>Code: <p> ${f.getCode()} <p></h4>
+                                <h4>Code: <p> ${f.getCode()} </p></h4>
                             </div>
                             <div class="flight-right-content">
-                                <h4>Price: <p> ${requestScope.flight.getPrice()} <p></h4>
+                                <h4>Price: <p> ${requestScope.flight.getPrice()} </p></h4>
                             </div>
                             <div class="flight-right-content">
                                 <c:set var = "ticketStatus" scope = "request" value = "${requestScope.ticketStatus}"/>
@@ -92,7 +95,7 @@
                                     <button><a href="refundTicket?Code=${f.getCode()}">Refund ticket</a></button>
                                 </c:if>
                                 <c:if test = "${ticketStatus == 1}">
-                                    <h4> This ticket has been canceled </h4>>
+                                    <h4> This ticket has been canceled </h4>
                                 </c:if>
                             </div>
                         </div>

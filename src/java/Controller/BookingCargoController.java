@@ -5,8 +5,14 @@
  */
 package Controller;
 
+import DAOS.CargoDAO;
+import DAOS.PassengerDAO;
+import Model.Cargo;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,21 +35,60 @@ public class BookingCargoController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet BookingCargoController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet BookingCargoController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        String FlightID = request.getParameter("flightID");
+        String identifyNumber = request.getParameter("identifyNumber");
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
+        String category = request.getParameter("category");
+        String weight = request.getParameter("weight");
+        String price = request.getParameter("price");
+        
+        int passengerID = 0;
+        PassengerDAO pd = new PassengerDAO();
+        passengerID = pd.getPassenger(name, identifyNumber, phone);
+        if(passengerID == 0 ) passengerID = pd.CreatePassenger(name, identifyNumber, phone);
+        
+        CargoDAO cd = new CargoDAO();
+        
+        String code = 'C' + shortenHash(hashString(FlightID + passengerID + category + weight) , 8);
+        Cargo cargo = cd.createCargo(FlightID, passengerID, code, category, Float.parseFloat(weight), Float.parseFloat(price));
+        System.out.println(cargo);
+    }
+      public String hashingTicketID(String ID) {
+        return shortenHash(hashString(ID), 8);
     }
 
+    public static String hashString(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = md.digest(input.getBytes());
+
+            StringBuilder hashString = new StringBuilder();
+            for (byte b : hashBytes) {
+                hashString.append(String.format("%02x", b));
+            }
+
+            return hashString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static String shortenHash(String hash, int length) {
+        if (hash.length() < length) {
+            return hash;
+        }
+        return hash.substring(8, length + 8);
+    }
+    
+    public static int generateRandomNumber() {
+        Random random = new Random();
+        int min = 1;
+        int max = 500;
+        int randomNumber = random.nextInt(max - min + 1) + min;
+        return randomNumber;
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

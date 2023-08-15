@@ -5,16 +5,12 @@
  */
 package DAOS;
 
-import Model.Flight;
 import Model.Ticket;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -139,7 +135,7 @@ public class TicketDAO extends DataAccessObject {
             // connnect to database 'FMS_FlightManagementSystem'
             // crate statement
             String sql = "select FlightID, PassengerID , Code"
-                    + " from Tickets, Customers where IdentifyNumber = ? ";
+                    + " from Tickets, Customers where IdentifyNumber = ?  and Tickets.PassengerID = Customers.ID";
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, passengerIdentifyNumber);
             // get data from table 'tbl Ticket'
@@ -174,7 +170,6 @@ public class TicketDAO extends DataAccessObject {
 
             stmt.setString(1, FlightID);
             stmt.setInt(2, PassengerID);
-            System.out.println(PassengerID);
             stmt.setString(3, Code);
             // get data from table 'tbl Ticket'
             // Execute the insert statement

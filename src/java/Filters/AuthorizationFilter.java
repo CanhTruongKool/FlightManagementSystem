@@ -39,7 +39,9 @@ public class AuthorizationFilter implements Filter {
                 "bookingCargo",
                 "editTicket",
                 "refundTicket",
-                "ticketSearching"
+                "ticketSearching",
+                "searchCargo",
+                "cargoSearching.jsp"
         };
     }
 

@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Controller/EditTicketController.java</file>
-            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/web/ticketSearching.jsp</file>
-            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Controller/RefundTicketController.java</file>
-            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/DAOS/TicketDAO.java</file>
-            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/DAOS/PassengerDAO.java</file>
+            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Controller/SearchingCargoController.java</file>
+            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/Model/Cargo.java</file>
+            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/src/java/DAOS/FlightDAO.java</file>
+            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/web/flightDetail.jsp</file>
+            <file>file:/C:/FileOfJavaWeb/FlightManagementSystem/web/cargoSearching.jsp</file>
         </group>
     </open-files>
 </project-private>

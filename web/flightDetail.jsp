@@ -38,6 +38,34 @@
                 <button onclick=""> Buy </button>
                 <button onclick="closeFormTicket(event)"> Close Form </button>
             </form>
+            <form action="bookingCargo" method="post" class="BookTicketForm" id="BookCargoForm" style="display:none">
+                <h4> <label for="">Flight ID </label> <input name="flightID" value="${f.getID()}" readonly="readonly"></h4>
+                <h4><label for="">Enter your Identity card number</label> <input type="tel" name="identifyNumber" pattern="[0-9]{12}"></h4>
+                <h4><label for="">Enter your name:</label> <input name="name" type="text"></h4>
+                <h4><label for="phone">Enter your phone number:</label><input type="tel" id="phone" name="phone" pattern="[0-9]{10}"></h4>
+                <h4><label for="">Enter Cargo category:</label>
+                    <select name="category">
+                        <option>Select category </option>
+                        <option>Perishables </option>
+                        <option>Electronics </option>
+                        <option>Pharmaceuticals </option>
+                        <option>Precious Cargo </option>
+                        <option>Agricultural Products </option>
+                        <option>Consumer Goods </option>
+                        <option>Sports Equipment </option>
+                    </select>
+                </h4>
+                <h4><label for="">Enter Cargo weight:</label>
+                    <select id="weight" name="weight" onchange="calculatePrice()">
+                        <option value="0">Select weight range </option>
+                    </select>
+                </h4>
+                <h4><label for="price">Price:</label>
+                    <input name="price" id="price" readonly="readonly" value="">VND
+                </h4>
+                <button onclick=""> Book Cargo </button>
+                <button onclick="closeFormCargo(event)"> Close Form </button>
+            </form>
             <c:set var = "f" scope = "request" value = "${requestScope.Flight}"/>
             <div class="flight" >
                 <div class="flight-right"  style="width: 100%">
@@ -90,10 +118,11 @@
             <c:if test = "${canBuy <= 0}">
                 <h4 style="color:white">This flight has fully booked</h4>
             </c:if>
-            <button id="CargoButton">Book Cargo Shipment</button>
+            <button id="CargoButton" onclick="openFormCargo()">Book Cargo Shipment</button>
         </div>
         <script>
             let ticketForm = document.getElementById("BookTicketForm");
+            let cargoForm = document.getElementById("BookCargoForm");
             let ticketButton = document.getElementById("TicketButton");
             let cargoButton = document.getElementById("CargoButton");
             function openFormTicket() {
@@ -101,6 +130,16 @@
                 if (ticketForm.style.display == "none")
                 {
                     ticketForm.style.display = "block";
+                    ticketButton.style.display = "none";
+                    cargoButton.style.display = "none";
+                }
+            }
+
+            function openFormCargo() {
+
+                if (cargoForm.style.display == "none")
+                {
+                    cargoForm.style.display = "block";
                     ticketButton.style.display = "none";
                     cargoButton.style.display = "none";
                 }
@@ -115,6 +154,39 @@
                     cargoButton.style.display = "inline";
                 }
             }
+            function closeFormCargo(event) {
+                event.preventDefault();
+                if (cargoForm.style.display != "none")
+                {
+                    cargoForm.style.display = "none";
+                    ticketButton.style.display = "inline";
+                    cargoButton.style.display = "inline";
+                }
+            }
+            function calculatePrice() {
+                var weight = document.getElementById("weight").value;
+                var price = 0
+                price = 50000 + (weight-1)* 5000;
+                document.getElementById("price").value = price;
+            }
+            var maxWeight = ${requestScope.Flight.getMaxCargoWeight()}; // Giá trị tối đa cho trọng lượng
+
+            function populateWeightOptions() {
+                var select = document.getElementById("weight");
+
+                for (var i = 1; i <= maxWeight; i += 10) {
+                    var option = document.createElement("option");
+                    option.value = i;
+                    option.text = i + "-" + (i + 9) + " KG";
+                    select.appendChild(option);
+                }
+            }
+
+
+
+            // Gọi hàm để tạo các tùy chọn trọng lượng khi trang tải lên
+            window.onload = populateWeightOptions;
         </script>
+
     </body>
 </html>
