@@ -38,6 +38,9 @@
                     <div class="search-button">
                         <button id="search">Search <i class="fa fa-search" aria-hidden="true"></i></button>
                     </div>
+                    <div class="search-button">
+                        <button id="cargo"> <a style="color: white; align-items: flex-start" href="cargoSearching.jsp">Cargo</a></button>
+                    </div>
                 </div>
             </form>
             <h3 style="color: white">${requestScope.searchResult}</h3>
@@ -58,26 +61,69 @@
                             <h4>Date/Time <p>${requestScope.flight.getDepartureDate().toString().replace("T", " AT ")} <p></h4>
                         </div>
                         <div class="flight-travel">
+                            <form action="editTicket" method="post">
+                                <div class="flight-right-content">
+                                    <input id="Code" name="Code" style="display: none" value="${f.getCode()}">
+                                    <h4>Passenger name: <p>${requestScope.passenger.getName()}</p> 
+                                        <input id="name" name="name" style="display: none" value="${requestScope.passenger.getName()}">
+                                    </h4>
+                                </div>
+                                <div class="flight-right-content">
+                                    <h4>Passenger phone: <p>${requestScope.passenger.getPhoneNumber()}</p>
+                                    <input id="phoneNumber" name="phone" style="display: none" value="${requestScope.passenger.getPhoneNumber()}">
+                                    </h4>
+                                </div>
+                                <div class="flight-right-content">
+                                    <h4>Passenger ID:<p>${requestScope.passenger.getIdentityNumber()}</p>
+                                        <input id="identifyNumber" name="identifyNumber" style="display: none"  value="${requestScope.passenger.getIdentityNumber()}">
+                                    </h4>
+                                </div>
+                                <div class="flight-right-content">                                  
+                                    <h4><button id="okButton" style="display: none" >OK</button></h4>
+                                </div>
+                            </form>
+                            <h4><button id="editButton" onclick="openEdit()" >Edit Ticket</button></h4>
                             <div class="flight-right-content">
-                                <h4>Passenger name: <p> ${requestScope.passenger.getName()}</p></h4>
-                            </div>
-                             <div class="flight-right-content">
-                                <h4>Passenger phone: <p> ${requestScope.passenger.getPhoneNumber()}</p></h4>
-                            </div>
-                             <div class="flight-right-content">
-                                <h4>Passenger ID:<p> ${requestScope.passenger.getIdentityNumber()}</p></h4>
+                                <h4>Code: <p> ${f.getCode()} </p></h4>
                             </div>
                             <div class="flight-right-content">
-                                <h4>Code: <p> ${f.getCode()} <p></h4>
+                                <h4>Price: <p> ${requestScope.flight.getPrice()} </p></h4>
                             </div>
                             <div class="flight-right-content">
-                                <h4>Price: <p> ${requestScope.flight.getPrice()} <p></h4>
+                                <c:set var = "ticketStatus" scope = "request" value = "${requestScope.ticketStatus}"/>
+                                <c:if test = "${ticketStatus == 0}">
+                                    <button><a href="refundTicket?Code=${f.getCode()}">Refund ticket</a></button>
+                                </c:if>
+                                <c:if test = "${ticketStatus == 1}">
+                                    <h4> This ticket has been canceled </h4>
+                                </c:if>
                             </div>
                         </div>
                     </div>
                 </div>
             </c:if>
         </div>
+        <script>
+            let Namefield = document.getElementById("name");
+            let IDfield = document.getElementById("identifyNumber");
+            let okButton = document.getElementById("okButton");
+            let editButton = document.getElementById("editButton");
 
+            function openEdit()
+            {
+                if (Namefield.style.display == "none")
+                {
+                    Namefield.style.display = "block";
+                    IDfield.style.display = "block";
+                    okButton.style.display = "block";
+                    editButton.value = "Close Edit";
+                } else {
+                    Namefield.style.display = "none";
+                    IDfield.style.display = "none";
+                    okButton.style.display = "none";
+                    editButton.value = "Edit Ticket";
+                }
+            }
+        </script>
     </body>
 </html>

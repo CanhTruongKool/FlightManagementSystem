@@ -26,7 +26,8 @@ public class FlightDAO extends DataAccessObject {
         try {
             // connnect to database 'FMS_FlightManagementSystem'
 
-            String sql = "select ID,  DeparturePlace, DepartureDate, Destination, NumberOfSeats, MaxCargoWeight, Price, CreatedBy, CreatedTime, ModifiedBy, LastModifiedTime, IsActivity from Flights";
+            String sql = "select ID,  DeparturePlace, DepartureDate, Destination, NumberOfSeats, MaxCargoWeight, Price, CreatedBy, CreatedTime,"
+                    + " ModifiedBy, LastModifiedTime, IsActivity from Flights order by DepartureDate Desc";
             // crate statement
             preparedStatement = connection.prepareStatement(sql);
             // get data from table 'tbl Flight'
@@ -51,7 +52,7 @@ public class FlightDAO extends DataAccessObject {
             // get data from table 'tbl Flight'
             String sql = "select ID, DeparturePlace, DepartureDate, Destination, NumberOfSeats, MaxCargoWeight, Price, CreatedBy, CreatedTime, ModifiedBy, LastModifiedTime, IsActivity "
                     + "from Flights where DeparturePlace = ? AND Destination = ? AND "
-                    + "DepartureDate >= ? AND DepartureDate < ? ";;
+                    + "DepartureDate >= ? AND DepartureDate < ?";
 
             // Parse the date string to a LocalDateTime object with time set to 00:00:00
             LocalDateTime startDate = LocalDateTime.parse(date + "T00:00:00");

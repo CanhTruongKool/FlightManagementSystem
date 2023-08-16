@@ -5,6 +5,14 @@
  */
 package Controller;
 
+import DAOS.CargoDAO;
+import DAOS.FlightDAO;
+import DAOS.PassengerDAO;
+import DAOS.TicketDAO;
+import Model.Cargo;
+import Model.Flight;
+import Model.Passenger;
+import Model.Ticket;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -29,19 +37,26 @@ public class SearchingCargoController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SearchingCargoController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SearchingCargoController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+      String code = request.getParameter("Code");
+        String searchResult = "";
+
+        CargoDAO cd = new CargoDAO();
+        Cargo cargo = cd.searchCargo(code);
+        PassengerDAO pd = new PassengerDAO();
+        FlightDAO fd=  new FlightDAO();
+        if (cargo == null) {
+            searchResult = "Not found cargo ticket";
+        } else {
+            searchResult = "Found cargo ticket";
+            Passenger passenger = pd.getPassengerFromID(cargo.getPassengerID());
+            Flight flight = fd.searchFlightByID(cargo.getFlightID());
+            request.setAttribute("cargo", cargo);
+            request.setAttribute("flight", flight);
+            request.setAttribute("passenger", passenger);
         }
+        
+        request.setAttribute("searchResult", searchResult);
+        request.getRequestDispatcher("cargoSearching.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

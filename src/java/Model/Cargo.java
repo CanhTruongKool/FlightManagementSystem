@@ -11,16 +11,17 @@ package Model;
  */
 public class Cargo {
     private int FlightID, PassengerID;
-    private String Category;
+    private String Category,Code;
     private float Weight, Price;
 
     public Cargo() {
     }
 
-    public Cargo(int FlightID, int PassengerID, String Category, float Weight, float Price) {
+    public Cargo(int FlightID, int PassengerID, String Category, String Code, float Weight, float Price) {
         this.FlightID = FlightID;
         this.PassengerID = PassengerID;
         this.Category = Category;
+        this.Code = Code;
         this.Weight = Weight;
         this.Price = Price;
     }
@@ -49,6 +50,14 @@ public class Cargo {
         this.Category = Category;
     }
 
+    public String getCode() {
+        return Code;
+    }
+
+    public void setCode(String Code) {
+        this.Code = Code;
+    }
+
     public float getWeight() {
         return Weight;
     }
@@ -67,9 +76,10 @@ public class Cargo {
 
     @Override
     public String toString() {
-        return "Cargo{" + "FlightID=" + FlightID + ", PassengerID=" + PassengerID + ", Category=" + Category + ", Weight=" + Weight + ", Price=" + Price + '}';
+        return "Cargo{" + "FlightID=" + FlightID + ", PassengerID=" + PassengerID + ", Category=" + Category + ", Code=" + Code + ", Weight=" + Weight + ", Price=" + Price + '}';
     }
-    
+
+   
     
 }
 

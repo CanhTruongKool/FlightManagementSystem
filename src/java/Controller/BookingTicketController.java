@@ -43,7 +43,6 @@ public class BookingTicketController extends HttpServlet {
         String phone = request.getParameter("phone");
         PassengerDAO pd = new PassengerDAO();
         int passenger = pd.getPassenger(name, identifyNumber, phone);
-        System.out.println(passenger);
         if (passenger == 0) {
             passenger = pd.CreatePassenger(name, identifyNumber, phone);
         }

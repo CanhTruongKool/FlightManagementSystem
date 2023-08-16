@@ -50,6 +50,8 @@ public class SearchingTicketController extends HttpServlet {
             searchResult = "Found ticket";
             Passenger passenger = pd.getPassengerFromID(ticket.getPassengerID());
             Flight flight = fd.searchFlightByID(ticket.getFlightID());
+            int ticketStatus = td.getTicketStatus(code);
+            request.setAttribute("ticketStatus", ticketStatus);
             request.setAttribute("ticket", ticket);
             request.setAttribute("flight", flight);
             request.setAttribute("passenger", passenger);
