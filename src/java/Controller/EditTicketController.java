@@ -31,7 +31,7 @@ public class EditTicketController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String Code = request.getParameter("Code");
+        String Code = request.getParameter("code");
         String Name = request.getParameter("name");
         String identifyNumber = request.getParameter("identifyNumber");
         String phoneNumber = request.getParameter("phone");
