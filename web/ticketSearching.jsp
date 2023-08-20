@@ -8,7 +8,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-    <head>
+    <head>      
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Searching Ticket</title>
@@ -22,7 +22,10 @@
         <link
             href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Roboto:wght@100&display=swap"
             rel="stylesheet">
-        <style><%@include file="/CSS/homecss.css"%></style>
+        <style><%@include file="/CSS/homecss.css"%>
+            <%@include file="/CSS/ticketcss.css" %></style>
+        <script src="https://kit.fontawesome.com/48fb0be74f.js"
+        crossorigin="anonymous"></script>
     </head>
     <body>  
         <header>
@@ -43,87 +46,172 @@
                     </div>
                 </div>
             </form>
-            <h3 style="color: white">${requestScope.searchResult}</h3>
+            <c:set var = "f" scope = "request" value = "${requestScope.ticket}"/>
+            <c:if test = "${f == null}">
+                <h3 style="color: white">${requestScope.searchResult}</h3>
+            </c:if>
             <c:set var = "f" scope = "request" value = "${requestScope.ticket}"/>
             <c:if test = "${f != null}">
-                <div class="flight">
-                    <div class="flight-right">
-                        <div class="flight-right-content">
-                            <h4>Flight ID:<p>FMS-A0${f.getFlightID()} <p></h4>
-                        </div>
-                        <div class="flight-right-content">
-                            <h4>Departure from: <p>${requestScope.flight.getDeparturePlace()} <p></h4>
-                        </div>
-                        <div class="flight-right-content">
-                            <h4>Destination :<p>${requestScope.flight.getDestination()} <p></h4>
-                        </div>
-                        <div class="flight-right-content">
-                            <h4>Date/Time <p>${requestScope.flight.getDepartureDate().toString().replace("T", " AT ")} <p></h4>
-                        </div>
-                        <div class="flight-travel">
-                            <form action="editTicket" method="post">
-                                <div class="flight-right-content">
-                                    <input id="Code" name="Code" style="display: none" value="${f.getCode()}">
-                                    <h4>Passenger name: <p>${requestScope.passenger.getName()}</p> 
-                                        <input id="name" name="name" style="display: none" value="${requestScope.passenger.getName()}">
-                                    </h4>
-                                </div>
-                                <div class="flight-right-content">
-                                    <h4>Passenger phone: <p>${requestScope.passenger.getPhoneNumber()}</p>
-                                    <input id="phoneNumber" name="phone" style="display: none" value="${requestScope.passenger.getPhoneNumber()}">
-                                    </h4>
-                                </div>
-                                <div class="flight-right-content">
-                                    <h4>Passenger ID:<p>${requestScope.passenger.getIdentityNumber()}</p>
-                                        <input id="identifyNumber" name="identifyNumber" style="display: none"  value="${requestScope.passenger.getIdentityNumber()}">
-                                    </h4>
-                                </div>
-                                <div class="flight-right-content">                                  
-                                    <h4><button id="okButton" style="display: none" >OK</button></h4>
-                                </div>
-                            </form>
-                            <h4><button id="editButton" onclick="openEdit()" >Edit Ticket</button></h4>
-                            <div class="flight-right-content">
-                                <h4>Code: <p> ${f.getCode()} </p></h4>
+                <div class="ticket-details">
+                    <div class="ticket-logo">
+                        <span></span>
+                        <h3>FMS <i class="fa fa-plane" aria-hidden="true"></i>
+                            airline</h3>
+                        <h3 style="font-size: 16px">Boarding pass</h3>
+                    </div>
+                    <div class="ticket-left">
+                        <div class="ticket-content-left">
+                            <div class="ticket-infor">
+                                <h4>Flight ID:</h4>
+                                <p>FMS-A0${f.getFlightID()} </p>
                             </div>
-                            <div class="flight-right-content">
-                                <h4>Price: <p> ${requestScope.flight.getPrice()} </p></h4>
+                            <div class="ticket-infor">
+                                <h4>Departure From: </h4>
+                                <p>${requestScope.flight.getDeparturePlace()}</p>
                             </div>
-                            <div class="flight-right-content">
-                                <c:set var = "ticketStatus" scope = "request" value = "${requestScope.ticketStatus}"/>
-                                <c:if test = "${ticketStatus == 0}">
-                                    <button><a href="refundTicket?Code=${f.getCode()}">Refund ticket</a></button>
-                                </c:if>
-                                <c:if test = "${ticketStatus == 1}">
-                                    <h4> This ticket has been canceled </h4>
-                                </c:if>
+                            <div class="ticket-infor">
+                                <h4>Destination: </h4>
+                                <p>${requestScope.flight.getDestination()}</p>
+                            </div>
+                            <div class="ticket-infor">
+                                <h4>Departure date: </h4>
+                                <p>${requestScope.flight.getDepartureDate().toString().replace("T", " AT ")}</p>
+                            </div>
+                        </div>
+                        <div class="ticket-content-right">
+                            <div class="ticket-infor">
+                                <h4>Passenger name: </h4>
+                                <p id="passengerName">${requestScope.passenger.getName()}</p>
+                            </div>
+                            <div class="ticket-infor">
+                                <h4>Passenger phone: </h4>
+                                <p id="phone">${requestScope.passenger.getPhoneNumber()}</p>
+                            </div>
+                            <div class="ticket-infor">
+                                <h4>Passenger ID: </h4>
+                                <p id="passengerID" >${requestScope.passenger.getIdentityNumber()}</p>
+                            </div>
+                            <div class="ticket-infor">
+                                <h4>Ticket-CODE: </h4>
+                                <p id="code">${f.getCode()}</p>
+                            </div>
+                            <div class="ticket-infor">
+                                <h4>Price: </h4>
+                                <p>${requestScope.flight.getPrice()}</p>
                             </div>
                         </div>
                     </div>
+                    <div class="ticket-right">
+                        <div class="ticket-infor">
+                            <h4>Passenger name: </h4>
+                            <p id="passengerNameCopy">${requestScope.passenger.getName()}</p>
+                        </div>
+                        <div class="ticket-infor">
+                            <h4>Departure From: </h4>
+                            <p>${requestScope.flight.getDeparturePlace()}</p>
+                        </div>
+                        <div class="ticket-infor">
+                            <h4>Destination: </h4>
+                            <p>${requestScope.flight.getDestination()}</p>
+                        </div>
+                        <div class="ticket-infor">
+                            <h4>Flight ID:</h4>
+                            <p>FMS-A0${f.getFlightID()} </p>
+                        </div>
+                        <div class="ticket-infor">
+                            <h4>Ticket-CODE: </h4>
+                            <p> ${f.getCode()} </p>
+                        </div>
+                        <div class="ticket-infor">
+                            <h4>Passenger ID: </h4>
+                            <p id="passengerIDCopy">${requestScope.passenger.getIdentityNumber()}</p>
+                        </div>
+                    </div>
                 </div>
-            </c:if>
-        </div>
+                <div class="alert-edit" id="alertEdit">
+                    <p>Focus mouse on Field ( Passenger name or Passenger ID ) on the left of the ticket to editing. </p>
+                </div>
+                <div class="ticket-selection" style="margin-top: 80px">
+                    <c:set var = "ticketStatus" scope = "request" value = "${requestScope.ticketStatus}"/>
+                    <c:if test = "${ticketStatus == 0}">
+                        <button id="editTicket" onclick="editTicket()">Edit</button>
+                        <button><a href="refundTicket?Code=${f.getCode()}">Refund ticket</a></button>
+                    </c:if>
+                    <c:if test = "${ticketStatus == 1}">
+                        
+                        <h4 style="color: white"> This ticket has been canceled </h4>
+                    </c:if>                      
+                </div>
+            </div>
+        </c:if>
+        <%@include file="contact.jsp" %>  
         <script>
-            let Namefield = document.getElementById("name");
-            let IDfield = document.getElementById("identifyNumber");
-            let okButton = document.getElementById("okButton");
-            let editButton = document.getElementById("editButton");
-
-            function openEdit()
-            {
-                if (Namefield.style.display == "none")
-                {
-                    Namefield.style.display = "block";
-                    IDfield.style.display = "block";
-                    okButton.style.display = "block";
-                    editButton.value = "Close Edit";
+            function editTicket() {
+                let alertEdit = document.getElementById('alertEdit');
+                if (alertEdit.style.opacity == 0) {
+                    alertEdit.style.opacity = 1;
                 } else {
-                    Namefield.style.display = "none";
-                    IDfield.style.display = "none";
-                    okButton.style.display = "none";
-                    editButton.value = "Edit Ticket";
+                    alertEdit.style.opacity = 0;
                 }
+                ;
+                let button = document.getElementById('editTicket');
+                let passName = document.getElementById('passengerName');
+                let passID = document.getElementById('passengerID');
+                let passNameCopy = document.getElementById('passengerNameCopy');
+                let passIDCopy = document.getElementById('passengerIDCopy');
+                if (button.innerHTML == 'Edit') {
+                    button.innerHTML = 'Finished';
+                } else {
+                    button.innerHTML = 'Edit';
+                    sendData();
+                }
+                passName.contentEditable = 'true';
+                passName.focus();
+                passName.addEventListener('focusout', () => {
+                    passNameCopy.innerHTML = passName.innerHTML;
+                });
+                passID.contentEditable = 'true';
+                passID.addEventListener('focusout', () => {
+                    passIDCopy.innerHTML = passID.innerHTML;
+                })
+            }
+            function sendData() {
+                let code = document.getElementById("code").innerHTML;
+                let phone = document.getElementById("phone").innerHTML;
+                let passName = document.getElementById('passengerName')
+                let passID = document.getElementById('passengerID');
+                let formEdit = document.createElement('form');
+                formEdit.style.width = '0';
+                formEdit.style.height = '0';
+                document.body.appendChild(formEdit);
+                let passengerName = document.createElement('input');
+                passengerName.type = Text;
+                passengerName.value = passName.innerHTML;
+                passengerName.name = 'name';
+                formEdit.appendChild(passengerName);
+                let passengerID = document.createElement('input');
+                passengerID.type = Text;
+                passengerID.value = passID.innerHTML;
+                passengerID.name = 'identifyNumber';
+                formEdit.appendChild(passengerID);
+                let codeID = document.createElement('input');
+                codeID.type = Text;
+                codeID.value = code;
+                codeID.name = 'code';
+                formEdit.appendChild(codeID);
+                let phoneID = document.createElement('input');
+                phoneID.type = Text;
+                phoneID.value = phone;
+                phoneID.name = 'phone';
+                formEdit.appendChild(phoneID);
+                formEdit.action = "editTicket";
+                formEdit.method = "post";
+                formEdit.style.width = '0';
+                formEdit.style.height = '0';
+                formEdit.style.visibility = "hidden";
+                formEdit.submit();
             }
         </script>
+
     </body>
 </html>

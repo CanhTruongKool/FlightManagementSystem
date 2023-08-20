@@ -8,20 +8,43 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon"
+              href="https://codelearn.io/CodeCamp/CodeCamp/Upload/60329921a2cc4b7abf76f8f97ab7e62e.png">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Roboto:wght@100&display=swap"
+            rel="stylesheet">
+        <script src="https://kit.fontawesome.com/48fb0be74f.js"
+        crossorigin="anonymous"></script>
+        <style> <%@include file="/CSS/logincss.css" %></style>
     </head>
     <body>
-        <form action="login" method="post">
-            <h3>Login</h3>
-            <label for="username">User Name:</label>
-            <input type="text" id="username" name="username">
-            <br>
-            <label for="password">Password:</label>
-            <input type="text" id="password" name="password">
-            <br>
-            <font style="color: red;">${requestScope.error}</font>
-            <button type="submit">Login</button>
-        </form>
-    </body>
+        <header>
+            <%@include file="header.jsp" %>
+        </header>
+
+        <div class="login">
+            <form action="" action="login" method="post">
+                <h1>Login</h1>
+                <div class="login-field">
+                    <label for="username">User Name:</label>
+                    <input type="text" id="username" name="username">
+                </div>
+                <div class="login-field">
+                    <label for="password">Password :</label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <font style="color: red;">${requestScope.error}</font>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <%@include file="contact.jsp" %> 
+    </body>              
 </html>

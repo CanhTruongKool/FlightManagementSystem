@@ -37,11 +37,13 @@ public class BookingCargoController extends HttpServlet {
             throws ServletException, IOException {
         String FlightID = request.getParameter("flightID");
         String identifyNumber = request.getParameter("identifyNumber");
-        String name = request.getParameter("name");
+        String name = request.getParameter("name").toUpperCase();
         String phone = request.getParameter("phone");
         String category = request.getParameter("category");
         String weight = request.getParameter("weight");
+        System.out.println(weight);
         String price = request.getParameter("price");
+        System.out.println(price);
         
         int passengerID = 0;
         PassengerDAO pd = new PassengerDAO();
@@ -52,7 +54,8 @@ public class BookingCargoController extends HttpServlet {
         
         String code = 'C' + shortenHash(hashString(FlightID + passengerID + category + weight) , 8);
         Cargo cargo = cd.createCargo(FlightID, passengerID, code, category, Float.parseFloat(weight), Float.parseFloat(price));
-        System.out.println(cargo);
+        
+        response.sendRedirect("searchCargo?Code="+cargo.getCode());
     }
       public String hashingTicketID(String ID) {
         return shortenHash(hashString(ID), 8);

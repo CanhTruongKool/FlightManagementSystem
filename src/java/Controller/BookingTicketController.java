@@ -38,13 +38,13 @@ public class BookingTicketController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String FlightID = request.getParameter("flightID");
-        String name = request.getParameter("name");
+        String name = request.getParameter("name").toUpperCase();
         String identifyNumber = request.getParameter("identifyNumber");
         String phone = request.getParameter("phone");
         PassengerDAO pd = new PassengerDAO();
-        int passenger = pd.getPassenger(name, identifyNumber, phone);
+        int passenger = pd.getPassenger(name.toUpperCase(), identifyNumber, phone);
         if (passenger == 0) {
-            passenger = pd.CreatePassenger(name, identifyNumber, phone);
+            passenger = pd.CreatePassenger(name.toUpperCase(), identifyNumber, phone);
         }
         TicketDAO td = new TicketDAO();
         Ticket ticket = td.createTicket(FlightID, passenger,

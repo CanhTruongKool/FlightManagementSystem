@@ -17,85 +17,285 @@ body{
     height: 100vh;
 }
 
-.flight .flight-left{
-    position: relative;
-    flex-wrap: wrap;
+.plane-details {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+.plane-details h1 {
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bold;
+    margin-top: 2%;
+    color: black;
+}
+.flight-details {
+    color: black;
+    font-size: larger;
+    width: 90%;
+    height: 60%;
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+}
+.flight-details .details-content {
+    margin-left: 5%;
+    padding: 1% 0;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 35%;
+}
+.flight-details .details-content h3 {
+    width: 50%;
+    margin-right: 2%;
+    color: black;
+    font-weight: bolder;
+    font-family: "Times New Roman", Times, serif;
+}
+.flight-details .details-content p {
+    color: black;
+}
+.details-content:first-of-type {
+    margin: 0;
+    width: 100%;
+    display: flex;
     justify-content: center;
     align-items: center;
-    width: 30%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.499);
-    border-radius: 10px;
+    margin-bottom: 40px;
+}
+.details-content:first-of-type h2 {
+    margin-right: 2%;
+    margin-bottom: 0;
+    color: black;
+    font-weight: bolder;
+    font-family: "Times New Roman", Times, serif;
+}
+.details-content:first-of-type p {
+    font-size: 1.5em;
+    color: white;
+}
+.flight-details .details-content:nth-child(2) h3 {
+    position: relative;
 }
 
-.flight .flight-right{
-    border-left: 2px dotted #000000;
+.flight-details .fly-effect {
+    padding: 10% 0 0 0;
+    width: 150%;
+    position: absolute;
+    right: -230%;
+    top: -200%;
+}
+.flight-details #effect .fly-effect i:first-of-type {
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.499);
-    border-radius: 10px;
-}
-.flight .flight-left h3,p{
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: bolder;
-}
-.flight-logo h4{
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 1em;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
     position: absolute;
-    top: 0;
-    left: 0;
-    padding: 7px 0;
-    color: white;
-    background-color: #1E3F85;
-    width: 100%;
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/57/Airplane_silhouette_S.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    text-align: center;
-    background-size: 90%;
-    font-weight: bolder;
+    bottom: 0;
+    opacity: 0;
 }
-.flight-right{
-    position: relative;
+.flight-details #effect .fly-effect i:nth-child(2) {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    transform: translateX(10%);
+    opacity: 0;
+}
+.flight-details #effect .fly-effect i:last-of-type {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    opacity: 1;
+    transform: translateX(calc(85%)) translateY(0);
+    opacity: 0;
+}
+@keyframes fly2 {
+    0% {
+        opacity: 1;
+        transform: translateX(10%);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(calc(85%));
+    }
+}
+@keyframes fly {
+    0% {
+        opacity: 1;
+        transform: translateX(-3%) translateY(250%);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(calc(6%)) translateY(0);
+    }
+}
+@keyframes fly3 {
+    0% {
+        transform: translateX(calc(85%)) translateY(0);
+    }
+    90% {
+        opacity: 1;
+        transform: translateX(97%) translateY(220%);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(97%) translateY(220%);
+    }
+}
+.details-content:nth-child(6) h3 {
+    width: 70%;
+}
+.details-content:nth-child(5) h3 {
+    width: 80%;
+}
+.details-content:nth-child(6) p:last-of-type {
+    margin-left: 5%;
+}
+#booking-button {
+    border-radius: 5px;
+    color: white;
+    font-size: large;
+    background-color: rgba(0, 0, 0, 0.664);
+    cursor: pointer;
+    position: absolute;
+    width: 10%;
+    height: 6%;
+    right: 10%;
+    bottom: 5%;
+    transition: 0.5s ease;
+}
+#booking-button:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.297);
+    box-shadow: 0px 0px 10px gray;
+}
+.booking {
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.655);
+    display: flex;
+    transition: all 1s;
+}
+#closeBooking {
+    transition: all 0.5s;
+    cursor: pointer;
+    color: #818181b4;
+    position: absolute;
+    z-index: 1;
+    font-size: 0em;
+    right: 5%;
+    top: 2%;
+}
+#closeBooking:hover {
+    color: #bdbbbb;
+}
+.booking-form {
+    backdrop-filter: blur(10px);
+    transition: all 0.5s;
+    margin: auto;
+    width: 0%;
+    height: 0.5%;
+    background-color: #818181b4;
+    clip-path: polygon(0% 7%, 63% 7%, 70% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+.booking-form .booking-choice {
+    color: white;
+    float: right;
+    width: 33%;
+    height: 7%;
+    display: flex;
     justify-content: center;
+    align-items: center;
+}
+.booking-choice .choice-radio {
+    cursor: pointer;
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+    width: 40%;
+    height: 100%;
+    align-items: center;
+    border-bottom: solid 2px black;
+}
+.booking-choice .choice-radio:hover {
+    cursor: pointer;
+    box-shadow: 5px 5px 15px rgb(166, 166, 166);
+}
+.booking-choice .choice-radio label {
+    padding: 10%;
+}
+.booking-choice .choice-radio label:hover {
+    cursor: pointer;
+}
+.booking-choice .choice-radio:first-of-type {
+    border-right: solid 2px black;
+}
+.booking-choice .choice-radio input {
+    width: 40%;
+    height: 40%;
+}
+.booking-form .booking-content {
+    width: 90%;
+    height: 75%;
+    margin-top: 10%;
+    margin-left: 5%;
+}
+.booking-content form {
     display: flex;
     flex-direction: column;
-}
-.flight-right-content{
-    margin-bottom: 2%;
-    margin-left: 5%;
-    display: flex;
+    justify-content: space-around;
+    align-items: center;
     width: 100%;
+    height: 100%;
 }
-.flight-right-content p{
-    margin-left: 0%;
-    font-size: 24px;
+.booking-content .user-input {
+    height: 10%;
+    font-weight: bolder;
+    display: flex;
+    width: 90%;
+    align-items: center;
+    justify-content: space-between;
+}
+.booking-content .user-input p {
     color: white;
 }
-.flight-right-content h4{
-    width: 100%;
-    font-family: 'Times New Roman', Times, serif;
+.booking-content .user-input h3 {
+    font-family: "Times New Roman", Times, serif;
     font-weight: bold;
-    font-size: 24px;
 }
-.flight-travel{
-    margin-top: 5%;
-}
-.content{
-    z-index: 1;
-}
-
-.BookTicketForm{
-    position: absolute;
-    width: 45%;
+.booking-content .user-input input {
+    color: white;
+    width: 50%;
     height: 80%;
-    background-color: white;
-    z-index: 2;
-    margin-left: 20%;
-    display: none;
+    background-color: #bdbbbb00;
+    border: none;
+    border-bottom: solid 2px rgb(148, 148, 148);
+}
+.booking-content button {
+    cursor: pointer;
+    color: white;
+    padding: 7px 25px;
+    background-color: black;
+}
+.booking-content button:hover {
+    background-color: #3d3d3d;
+    box-shadow: 0px 0px 10px gray;
+}
+.booking-content .user-input select {
+    color: white;
+    width: 50%;
+    height: 80%;
+    background-color: #bdbbbb00;
+    border: none;
+    border-bottom: solid 2px rgb(148, 148, 148);
+}
+.booking-content .user-input option {
+    color: black;
+}
+#cargoForm {
+    position: relative;
+    top: -100%;
 }

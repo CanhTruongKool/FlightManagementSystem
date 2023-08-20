@@ -37,14 +37,14 @@
                             <p>Departure Place:</p> 
                             <select id="departure" name="departure">
                                 <option>Choose departure</option>
-                                
+
                             </select>
                         </div>
                         <div class="search-bar-item1">
                             <p>Destination:</p> 
                             <select id="destination" name="destination">
                                 <option>Choose destination</option>
-                                
+
                             </select>
                         </div>
                         <div class="search-bar-item2">
@@ -62,7 +62,7 @@
             <div>
                 <h3 class="searchResult">${sessionScope.searchResult}</h3>
             </div> 
-                <c:set var = "canSearch" scope = "session" value = "${sessionScope.FlightList}"/>
+            <c:set var = "canSearch" scope = "session" value = "${sessionScope.FlightList}"/>
             <c:if test = "${canSearch == null}">
                 <div class="flight-list">
                     <c:forEach var="f" items="${requestScope.FlightList}" varStatus="status"> 
@@ -134,15 +134,15 @@
                 <c:set var = "Page" scope = "request" value = "${requestScope.page}"/>
                 <c:if test = "${Page > 0}">
                     <button id="previous"><a href="${requestScope.position}?page=${requestScope.page -1}">Previous <i class="fa fa-caret-square-o-left" aria-hidden="true"></i></button>
-                </c:if>
-                <c:set var = "num" scope = "request" value = "${requestScope.num}"/>
-                <c:if test = "${Page < num -1}">
+                    </c:if>
+                    <c:set var = "num" scope = "request" value = "${requestScope.num}"/>
+                    <c:if test = "${Page < num -1}">
                     <button id="next"><a href="${requestScope.position}?page=${requestScope.page +1}">Next <i class="fa fa-caret-square-o-right" aria-hidden="true"></i> </a></button>
                 </c:if>
 
             </div>
         </div>
-
+        <%@include file="contact.jsp" %>           
     </body>
     <script>
         document.querySelector('form').addEventListener('submit', function (event) {
@@ -151,7 +151,7 @@
             inputElement.value = inputElement.value.replace(' ', 'T'); // Thêm ký tự "T" vào trước giờ
             this.submit();
         });
-      
+
         async function getDistrict() {
             const response = await fetch("https://provinces.open-api.vn/api/p/");
             var districtList = response.json();
