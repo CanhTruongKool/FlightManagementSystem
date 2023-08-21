@@ -1,0 +1,16 @@
+SMAP
+managementMenu_jsp.java
+JSP
+*S JSP
+*F
++ 0 managementMenu.jsp
+managementMenu.jsp
++ 1 managementMenuCss.css
+CSS/managementMenuCss.css
+*L
+5,16:49
+1#1,122:65
+20#0,12:186
+32:198,3
+33,42:201
+*E

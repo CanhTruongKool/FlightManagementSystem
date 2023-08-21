@@ -1,0 +1,121 @@
+*{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.nav-bar{
+    background-color: #87CEEB;
+    top: 0;
+    width: 100%;
+    height: 10%;
+    position: fixed;
+    border-bottom: groove rgba(128, 128, 128, 0.201);
+}
+.nav-bar nav{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.nav-bar .logo{
+    background-color: #14306bb1;
+    color: white;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/5/57/Airplane_silhouette_S.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: 90%;
+    background-position: 10% 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 2%;
+    border: groove gray;
+    width: 15%;
+    height: 50%;
+    clip-path: polygon(0% 30%, 20% 0%, 100% 0%, 100% 70%, 80% 100%, 0% 100% );
+}
+.nav-bar .title {
+    display: flex;
+    font-size: larger;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    margin-left: 13%;
+}
+.nav-bar .user-title{
+    display: flex;
+    width: 30%;
+}
+.nav-bar .user-title h3 {
+    display: flex;
+    align-items: center;
+}
+.nav-bar .user-title h3 img{
+    margin: 0 5%;
+    width: 10%;
+}
+.content{
+    width: 100%;
+    height: 80%;
+    display: flex;
+    margin-top: 5%;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.content .use-case{
+    border-radius: 10px;
+    width: 30%;
+    height: 40%;
+    border: gray groove;
+    position: relative;
+    background-image: url('https://img.freepik.com/free-vector/airplane-flying-high-sky_1308-11193.jpg?w=2000');
+    background-size: 100%;
+    transition: 1s ease;
+    background-position-y: 50%;
+    background-position-x: 50%;
+}
+.content .use-case:hover{
+    box-shadow: 0px 0px 20px gray;
+    cursor: pointer;
+    background-size: 120%;
+}
+.content .use-case:hover > .use-case-title{
+    background-color: rgba(128, 128, 128, 0.577);
+    color: black;
+}
+.content .use-case-title{
+    width: 100%;
+    height: 25%;
+    background-color: rgba(25, 1, 1, 0.577);
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    transition: 1s ease;
+}
+.content .use-case:nth-child(2){
+background-image: url('https://as2.ftcdn.net/v2/jpg/03/32/89/61/1000_F_332896110_vTQiZVCvBPJsKo7kp93oMDcFsHXtabZM.jpg');
+}
+.content .use-case:nth-child(3){
+background-image: url('https://t4.ftcdn.net/jpg/03/75/16/63/360_F_375166377_1e2a3T80447OuYmudFNacI9igUpxXSCP.jpg');
+}
+.content .use-case:nth-child(4){
+background-image: url('https://7228775.fs1.hubspotusercontent-na1.net/hubfs/7228775/FA-for-Airlines-Header.png');
+}
+.content .use-case:nth-child(5){
+background-image: url('https://media.istockphoto.com/id/502775872/vector/loading.jpg?s=612x612&w=0&k=20&c=ZGMHn07qxdbNGOrrp3NFiqRihYGGPJl98TabBBkVyEU=');
+}
+.content .use-case:last-of-type{
+background-image: url('https://www.oag.com/hubfs/airline-revenue-management.jpg');
+}
