@@ -32,7 +32,7 @@
                 <h3>Welcome User: <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" alt=""> ${sessionScope.username}</h3>
             </div>
             <div>
-                <button><i class="fa fa-sign-out" aria-hidden="true"></i> <a href="logout"></a>Logout</button>             
+                 <a href="home">Logout </a>      
             </div>
         </nav>
     </div>
@@ -64,7 +64,7 @@
         </div>
         <div class="use-case">
             <div class="use-case-title">
-                <h2>Revenue</h2>
+                <a href="analyzeRevenue.jsp"><h2>Revenue</h2></a>
             </div>
         </div>
     </div>

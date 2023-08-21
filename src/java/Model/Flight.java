@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Flight extends Audit{
+public class Flight extends Audit implements Serializable{
     private int ID;
     private String DeparturePlace,Destination;
     private LocalDateTime DepartureDate;
