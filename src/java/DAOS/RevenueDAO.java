@@ -1,6 +1,6 @@
 package DAOS;
 
-import Model.Revenue;
+import Controller.DTOS.RevenueDTO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -9,10 +9,8 @@ public class RevenueDAO extends DataAccessObject {
     public RevenueDAO() {
     }
 
-    public Revenue getTotalRevenue() {
-
-        Revenue result = new Revenue();
-
+    public RevenueDTO getTotalRevenue() {
+        RevenueDTO result = new RevenueDTO();
         try {
             String sql = "SELECT SUM(r.RevenueTicket) AS RevenueTicket, SUM(r.RevenueCargo) AS RevenueCargo \n"
                     + "FROM ( \n"
@@ -28,9 +26,9 @@ public class RevenueDAO extends DataAccessObject {
             ResultSet rs = stmt.executeQuery();   // show data
 
             while (rs.next()) {
-                float revenueTicket = rs.getInt("RevenueTicket");
-                float revenueCargo = rs.getInt("RevenueCargo");
-                result = new Revenue(revenueTicket, revenueCargo);
+                double revenueTicket = rs.getDouble("RevenueTicket");
+                double revenueCargo = rs.getDouble("RevenueCargo");
+                result = new RevenueDTO(revenueTicket, revenueCargo);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -39,9 +37,9 @@ public class RevenueDAO extends DataAccessObject {
         return result;
     }
 
-    public Revenue getRevenueByFlightID(String flightID) {
+    public RevenueDTO getRevenueByFlightID(String flightID) {
 
-        Revenue result = new Revenue();
+        RevenueDTO result = new RevenueDTO();
 
         try {
             String sql = "SELECT SUM(r.RevenueTicket) AS RevenueTicket, SUM(r.RevenueCargo) AS RevenueCargo \n"
@@ -60,9 +58,9 @@ public class RevenueDAO extends DataAccessObject {
             ResultSet rs = stmt.executeQuery();   // show data
 
             while (rs.next()) {
-                float revenueTicket = rs.getInt("RevenueTicket");
-                float revenueCargo = rs.getInt("RevenueCargo");
-                result = new Revenue(revenueTicket, revenueCargo);
+                double revenueTicket = rs.getDouble("RevenueTicket");
+                double revenueCargo = rs.getDouble("RevenueCargo");
+                result = new RevenueDTO(revenueTicket, revenueCargo);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
