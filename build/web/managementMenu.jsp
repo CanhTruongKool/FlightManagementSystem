@@ -32,7 +32,7 @@
                 <h3>Welcome User: <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" alt=""> ${sessionScope.username}</h3>
             </div>
             <div>
-                 <a href="home">Logout </a>      
+                 <a href="logout">Logout </a>      
             </div>
         </nav>
     </div>

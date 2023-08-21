@@ -64,7 +64,7 @@ public class CargoDAO extends DataAccessObject{
             // crate statement
             String sql = "select FlightID,PassengerID,Code,Category,Weight,Price from FlightCargo where Code = ?";
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, code); //FMS-A01
+            stmt.setString(1, code.trim()); //FMS-A01
             // get data from table 'tbl Ticket'
             ResultSet rs = stmt.executeQuery();
             // show data
