@@ -41,7 +41,6 @@ public class HomeController extends HttpServlet {
         int page = 0;
         try {
             page =Integer.parseInt(request.getParameter("page")) ;
-            System.out.println(page);
         } catch (Exception e) {
             page = 0;
         }

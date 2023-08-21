@@ -62,7 +62,7 @@
                     </div>
 
                     <div class="details-content">
-                        <h3>Cargo Weight avaiable <i class="fas fa-boxes"></i>:
+                        <h3>Cargo Weight available <i class="fas fa-boxes"></i>:
                         </h3>      
                         <p style="color: white">${f.getMaxCargoWeight()} (KG) </p>
                     </div>
@@ -111,14 +111,17 @@
                                     <c:set var = "f" scope = "request" value = "${requestScope.Flight}"/>
                                     <p id="ticketPrice"> ${f.getPrice()}</p>
                                 </div>
+                                <div class="details-content">                         
+                                    <p style="color: red">You will have 20kg of free cargo, if you want to have more cargo weight, please buy more at cargo </p>
+                                </div>
                                 <c:set var = "canBuy" scope = "request" value = "${f.getNumberOfSeats()-requestScope.NumberOfSeats}"/>  
                                 <c:if test = "${canBuy > 0}">
-                                  <button type="submit">Book Ticket!</button>
+                                    <button type="submit">Book Ticket!</button>
                                 </c:if>
                                 <c:if test = "${canBuy <= 0}">
                                     <h4 style="color:white">This flight has fully booked</h4>
                                 </c:if>
-                                
+
                             </form>
                             <form id="cargoForm" onsubmit="return(validateForm(1))" action="bookingCargo" method="post">
                                 <div class="user-input">
@@ -299,7 +302,7 @@
                 return true;
             }
         </script>
-         <%@include file="contact.jsp" %>  
+        <%@include file="contact.jsp" %>  
     </body>
 
 </html>
