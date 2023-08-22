@@ -44,7 +44,7 @@
         </div>
         <div class="use-case">
             <div class="use-case-title">
-                <h2>Flight List</h2>
+                <a href="flightlist">  <h2>Flight List</h2</a>
             </div>
         </div>
         <div class="use-case">
