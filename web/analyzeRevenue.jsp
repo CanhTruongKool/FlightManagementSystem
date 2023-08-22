@@ -17,7 +17,7 @@
             <form action="revenueFlight" method="post">
                 <input name="flightID">
             </form>
-              <c:set var = "flightID" value = "${requestScope.flightID}"/>
+            <c:set var = "flightID" value = "${requestScope.flightID}"/>
             <c:if test = "${flightID != null}">
                 <h2>FMS - A0${requestScope.flightID}</h2>
             </c:if>
@@ -34,5 +34,6 @@
                 <td> <p>${r.totalRevenue}</p><br/></td>
             </tr>
         </table>
+        <a href="management"><button>Back</button></a>
     </body>
 </html>

@@ -14,12 +14,12 @@ public class RevenueDAO extends DataAccessObject {
         try {
             String sql = "SELECT SUM(r.RevenueTicket) AS RevenueTicket, SUM(r.RevenueCargo) AS RevenueCargo \n"
                     + "FROM ( \n"
-                    + "	SELECT ID, QuanlityTicket*Flights.PriceTicket AS RevenueTicket, RevenueCargo\n"
+                    + "	SELECT ID, QuanlityTicket*Flights.Price AS RevenueTicket, RevenueCargo\n"
                     + "	FROM Flights left join(\n"
                     + "		SELECT FlightID, COUNT(*) AS QuanlityTicket\n"
                     + "		FROM Tickets \n"
                     + "		GROUP BY FlightID) AS t on t.FlightID = Flights.ID left join(\n"
-                    + "			SELECT FlightID, SUM(FlightCargo.PriceCargo) AS RevenueCargo\n"
+                    + "			SELECT FlightID, SUM(FlightCargo.Price) AS RevenueCargo\n"
                     + "			FROM FlightCargo\n"
                     + "			GROUP BY FlightID HAVING COUNT(*) > 0) AS c on c.FlightID = Flights.ID) AS r";
             PreparedStatement stmt = connection.prepareStatement(sql);

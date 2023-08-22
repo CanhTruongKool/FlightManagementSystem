@@ -64,7 +64,7 @@
         </div>
         <div class="use-case">
             <div class="use-case-title">
-                <a href="analyzeRevenue.jsp"><h2>Revenue</h2></a>
+                <a href="revenue"><h2>Revenue</h2></a>
             </div>
         </div>
     </div>

@@ -162,6 +162,18 @@ insert into Customers([Name],[PhoneNumber],[IdentifyNumber])
 values ('Tester01',0123456789,012345678910)
 
 insert into Tickets ([FlightID],[PassengerID],[Code])
-values (01,01,'abc')
+	values (01,01,'ab7c'),
+	(02,01,'azc'),(03,01,'as'),(04,01,'asc'),(05,01,'aaac'),(06,01,'asdc'),(07,01,'abcsadf'),(08,01,'abca')
+
+	SELECT SUM(r.RevenueTicket) AS RevenueTicket, SUM(r.RevenueCargo) AS RevenueCargo 
+	FROM ( 
+		SELECT ID, QuanlityTicket*Flights.Price AS RevenueTicket, RevenueCargo
+		FROM Flights left join(
+			SELECT FlightID, COUNT(*) AS QuanlityTicket
+			FROM Tickets 
+			GROUP BY FlightID) AS t on t.FlightID = Flights.ID left join(
+				SELECT FlightID, SUM(FlightCargo.Price) AS RevenueCargo
+				FROM FlightCargo
+				GROUP BY FlightID HAVING COUNT(*) > 0) AS c on c.FlightID = Flights.ID) AS r
 
 select count(*) from Tickets where FlightID = 1
