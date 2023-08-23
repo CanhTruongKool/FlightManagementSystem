@@ -44,7 +44,7 @@
         </div>
         <div class="use-case">
             <div class="use-case-title">
-                <h2>Flight List</h2>
+                <a href="flightlist">  <h2>Flight List</h2</a>
             </div>
         </div>
         <div class="use-case">
@@ -64,7 +64,7 @@
         </div>
         <div class="use-case">
             <div class="use-case-title">
-                <a href="analyzeRevenue.jsp"><h2>Revenue</h2></a>
+                <a href="revenue"><h2>Revenue</h2></a>
             </div>
         </div>
     </div>

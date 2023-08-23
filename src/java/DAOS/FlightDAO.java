@@ -59,7 +59,7 @@ public class FlightDAO extends DataAccessObject {
             // Parse the date string to a LocalDateTime object with time set to 23:59:59
             LocalDateTime endDate = LocalDateTime.parse(date + "T23:59:59");
 
-            preparedStatement  = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, departure.trim());
             preparedStatement.setString(2, destination.trim());
             preparedStatement.setTimestamp(3, Timestamp.valueOf(startDate));
@@ -130,7 +130,7 @@ public class FlightDAO extends DataAccessObject {
             preparedStatement.setInt(1, FlightID);
 
             // Thực hiện truy vấn
-            resultSet =  preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             // show data
 
             while (resultSet.next()) {
@@ -172,5 +172,15 @@ public class FlightDAO extends DataAccessObject {
         int isActivity = resultSet.getInt("IsActivity");
         return new Flight(createdBy, createdTime, modifiedBy, lastModifiedTime, isActivity, ID, _departure,
                 _destination, departureDate, numberOfSeats, maxCargoWeight, price);
+    }
+
+    public void cancelFlight(int flightID, int adminID) throws SQLException {
+        String sql = "UPDATE Flights\n"
+                + "SET ModifiedBy = ?, LastModifiedTime = GETDATE(), IsActivity = 0\n"
+                + "WHERE ID = ?";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, adminID);
+        preparedStatement.setInt(2, flightID);
+        preparedStatement.executeUpdate();
     }
 }

@@ -1,25 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import DAOS.FlightDAO;
-import Model.Flight;
 import java.io.IOException;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Administrator
- */
-public class ViewFlightListController extends HttpServlet {
+public class CancelFlightController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,21 +21,19 @@ public class ViewFlightListController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int page = 1;
-        int recordsPerPage = 10;
-        if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
-        }
+       
         FlightDAO flightDAO = new FlightDAO();
-        int noOfRecords = flightDAO.flightList.size();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0/ recordsPerPage);
-         ArrayList<Flight> list = flightDAO.getFlight((page - 1) * recordsPerPage, Math.min((page) * recordsPerPage, noOfRecords));
-        request.setAttribute("flightList", list);
-        request.setAttribute("noOfPages", noOfPages);
-        request.setAttribute("currentPage", page);
-        RequestDispatcher view
-                = request.getRequestDispatcher("flightList.jsp");
-        view.forward(request, response);
+       
+        try {
+            String flightID_raw = request.getParameter("id");
+            int flightID = Integer.parseInt(flightID_raw);
+            int currentUserId = Integer.parseInt(request.getSession().getAttribute("id").toString());
+            flightDAO.cancelFlight(flightID, currentUserId);
+            String currentPage = request.getParameter("page");
+            response.sendRedirect("flightlist?page="+currentPage);
+        } catch (Exception e) {
+
+        }
 
     }
 
