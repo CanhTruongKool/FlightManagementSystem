@@ -41,7 +41,7 @@ public class ViewFlightListController extends HttpServlet {
         FlightDAO flightDAO = new FlightDAO();
         int noOfRecords = flightDAO.flightList.size();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0/ recordsPerPage);
-         ArrayList<Flight> list = flightDAO.getFlight((page - 1) * recordsPerPage, Math.min((page) * recordsPerPage, noOfRecords));
+         ArrayList<Flight> list = flightDAO.getFlight((page - 1) * recordsPerPage, Math.min((page) * recordsPerPage, noOfRecords), flightDAO.readDataByAdmin());
         request.setAttribute("flightList", list);
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);

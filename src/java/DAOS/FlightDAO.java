@@ -43,7 +43,30 @@ public class FlightDAO extends DataAccessObject {
 
         return list;
     }
+    
+     public ArrayList<Flight> readDataByAdmin() {
+        ArrayList<Flight> list = new ArrayList<>();
+        try {
+            // connnect to database 'FMS_FlightManagementSystem'
 
+            String sql = "select ID,  DeparturePlace, DepartureDate, Destination, NumberOfSeats, MaxCargoWeight, Price, CreatedBy, CreatedTime,"
+                    + " ModifiedBy, LastModifiedTime, IsActivity from Flights  order by DepartureDate Desc";
+            // crate statement
+            preparedStatement = connection.prepareStatement(sql);
+            // get data from table 'tbl Flight'
+            resultSet = preparedStatement.executeQuery();
+            // show data
+            while (resultSet.next()) {
+                list.add(getEntity());
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return list;
+    }
+    
     public ArrayList<Flight> searchFlight(String departure, String destination, String date) {
         ArrayList<Flight> list = new ArrayList<>();
         try {
@@ -52,7 +75,7 @@ public class FlightDAO extends DataAccessObject {
             // get data from table 'tbl Flight'
             String sql = "select ID, DeparturePlace, DepartureDate, Destination, NumberOfSeats, MaxCargoWeight, Price, CreatedBy, CreatedTime, ModifiedBy, LastModifiedTime, IsActivity "
                     + "from Flights where DeparturePlace = ? AND Destination = ? AND "
-                    + "DepartureDate >= ? AND DepartureDate < ? AND IsActivity = 1";
+                    + "DepartureDate >= ? AND DepartureDate < ? and IsActivity = 1";
 
             // Parse the date string to a LocalDateTime object with time set to 00:00:00
             LocalDateTime startDate = LocalDateTime.parse(date + "T00:00:00");
@@ -78,10 +101,10 @@ public class FlightDAO extends DataAccessObject {
         return list;
     }
 
-    public ArrayList<Flight> getFlight(int start, int end) {
+    public ArrayList<Flight> getFlight(int start, int end,ArrayList<Flight> list ) {
         ArrayList<Flight> resultList = new ArrayList<>();
         for (int i = start; i < end; i++) {
-            resultList.add(readData().get(i));
+          resultList.add(list.get(i));
         }
         return resultList;
     }

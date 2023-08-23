@@ -52,7 +52,7 @@ public class HomeController extends HttpServlet {
         start = (page)* numberPerPage;
         end = Math.min((page +1) * numberPerPage, size);
         
-        ArrayList<Flight> flightList = fd.getFlight(start, end);
+        ArrayList<Flight> flightList = fd.getFlight(start, end,fd.readData());
         
         request.setAttribute("position", "home");
         request.setAttribute("page", page);
