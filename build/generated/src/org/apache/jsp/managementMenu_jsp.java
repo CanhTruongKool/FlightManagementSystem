@@ -212,7 +212,7 @@ public final class managementMenu_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("        </div>\r\n");
       out.write("        <div class=\"use-case\">\r\n");
       out.write("            <div class=\"use-case-title\">\r\n");
-      out.write("                <h2>Flight List</h2>\r\n");
+      out.write("                <a href=\"flightlist\">  <h2>Flight List</h2</a>\r\n");
       out.write("            </div>\r\n");
       out.write("        </div>\r\n");
       out.write("        <div class=\"use-case\">\r\n");
@@ -232,7 +232,7 @@ public final class managementMenu_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("        </div>\r\n");
       out.write("        <div class=\"use-case\">\r\n");
       out.write("            <div class=\"use-case-title\">\r\n");
-      out.write("                <a href=\"analyzeRevenue.jsp\"><h2>Revenue</h2></a>\r\n");
+      out.write("                <a href=\"revenue\"><h2>Revenue</h2></a>\r\n");
       out.write("            </div>\r\n");
       out.write("        </div>\r\n");
       out.write("    </div>\r\n");
