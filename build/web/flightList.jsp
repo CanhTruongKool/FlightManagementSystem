@@ -10,6 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Flight List</title>
+        <link rel="icon" href="https://png.pngtree.com/png-vector/20191023/ourlarge/pngtree-vector-airplane-icon-png-image_1851857.jpg">
     </head>
     <body>
         <h1>TRACKING FLIGHTS</h1>
@@ -53,7 +54,7 @@
             </c:forEach>
         </table>
         <a href="management"><button>Back</button></a>
-        
+
         <c:if test="${currentPage != 1}">
         <td><a href="flightlist?page=${currentPage - 1}">Previous</a></td>
     </c:if>

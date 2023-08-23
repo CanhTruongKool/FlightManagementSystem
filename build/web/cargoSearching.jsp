@@ -13,8 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Cargo searching</title>
         <link rel="stylesheet" href="./CSS/homecss.css">
-        <link rel="icon"
-              href="https://codelearn.io/CodeCamp/CodeCamp/Upload/60329921a2cc4b7abf76f8f97ab7e62e.png">
+        <link rel="icon" href="https://png.pngtree.com/png-vector/20191023/ourlarge/pngtree-vector-airplane-icon-png-image_1851857.jpg">
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -133,6 +132,6 @@
                 </div>
             </c:if>
         </div>
-         <%@include file="contact.jsp" %>  
+        <%@include file="contact.jsp" %>  
     </body>
 </html>
