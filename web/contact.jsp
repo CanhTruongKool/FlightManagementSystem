@@ -213,7 +213,6 @@
                         <p>Trương Thế Cảnh</p>
                         <p>Phạm Ngọc Quyền</p>
                         <p>Nguyễn Trung Dũng</p>
-                        <p>Lê Cảnh Trọng</p>
                     </div>
                 </div>
             </div>
