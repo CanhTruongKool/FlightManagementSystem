@@ -43,8 +43,8 @@ public class FlightDAO extends DataAccessObject {
 
         return list;
     }
-    
-     public ArrayList<Flight> readDataByAdmin() {
+
+    public ArrayList<Flight> readDataByAdmin() {
         ArrayList<Flight> list = new ArrayList<>();
         try {
             // connnect to database 'FMS_FlightManagementSystem'
@@ -66,7 +66,7 @@ public class FlightDAO extends DataAccessObject {
 
         return list;
     }
-    
+
     public ArrayList<Flight> searchFlight(String departure, String destination, String date) {
         ArrayList<Flight> list = new ArrayList<>();
         try {
@@ -101,10 +101,10 @@ public class FlightDAO extends DataAccessObject {
         return list;
     }
 
-    public ArrayList<Flight> getFlight(int start, int end,ArrayList<Flight> list ) {
+    public ArrayList<Flight> getFlight(int start, int end, ArrayList<Flight> list) {
         ArrayList<Flight> resultList = new ArrayList<>();
         for (int i = start; i < end; i++) {
-          resultList.add(list.get(i));
+            resultList.add(list.get(i));
         }
         return resultList;
     }
@@ -198,12 +198,20 @@ public class FlightDAO extends DataAccessObject {
     }
 
     public void cancelFlight(int flightID, int adminID) throws SQLException {
-        String sql = "UPDATE Flights\n"
+
+        String sql = "BEGIN TRANSACTION;\n"
+                + "UPDATE Flights\n"
                 + "SET ModifiedBy = ?, LastModifiedTime = GETDATE(), IsActivity = 0\n"
-                + "WHERE ID = ?";
+                + "WHERE ID = ? and IsActivity = 1\n"
+                + "\n"
+                + "UPDATE Tickets\n"
+                + "SET IsCancelled = 1\n"
+                + "WHERE FlightID = ? and IsCancelled = 0\n"
+                + "COMMIT;";
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, adminID);
         preparedStatement.setInt(2, flightID);
+        preparedStatement.setInt(3, flightID);
         preparedStatement.executeUpdate();
     }
 }

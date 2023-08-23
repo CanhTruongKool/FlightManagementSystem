@@ -1,21 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
+import Controller.DTOS.PaginatedListDTO;
+import Controller.DTOS.PassengerDTO;
+import DAOS.PassengerDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Administrator
- */
 public class FlightPassengerController extends HttpServlet {
 
     /**
@@ -30,18 +28,38 @@ public class FlightPassengerController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet FlightPassengerController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet FlightPassengerController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+        String flightID = request.getParameter("id");
+        String flightPage = request.getParameter("fp");
+        String statusFlight = request.getParameter("st");
+
+        PassengerDAO passengerDAO = new PassengerDAO();
+        ArrayList<PassengerDTO> passengerList = new ArrayList<>();
+        try {
+            passengerList = passengerDAO.getPassengersByFlightID(flightID);
+        } catch (SQLException ex) {
+            Logger.getLogger(FlightPassengerController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        int pageSize = 10;
+        int noOfPages = (int) Math.ceil(passengerList.size() * 1.0 / pageSize);
+        String page_raw = request.getParameter("page");
+        int page;
+        try {
+            page = Integer.parseInt(page_raw);
+        } catch (Exception e) {
+            page = 1;
+        }
+
+        request.setAttribute("passengerList", PaginatedListDTO.getPage(passengerList, page, pageSize));
+        request.setAttribute("noOfPages", noOfPages);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("flightPage", flightPage);
+        request.setAttribute("flightID", flightID);
+        request.setAttribute("statusFlight", statusFlight);
+
+        RequestDispatcher view = request.getRequestDispatcher("flightPassenger.jsp");
+        view.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

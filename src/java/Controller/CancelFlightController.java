@@ -26,11 +26,16 @@ public class CancelFlightController extends HttpServlet {
        
         try {
             String flightID_raw = request.getParameter("id");
+            String flightPage = request.getParameter("fp");
             int flightID = Integer.parseInt(flightID_raw);
             int currentUserId = Integer.parseInt(request.getSession().getAttribute("id").toString());
             flightDAO.cancelFlight(flightID, currentUserId);
             String currentPage = request.getParameter("page");
-            response.sendRedirect("flightlist?page="+currentPage);
+            if(flightPage == null){
+                response.sendRedirect("flightlist?page="+currentPage);
+            }else
+                response.sendRedirect("flightPassenger?fp="+flightPage+"&id="+flightID_raw);
+            
         } catch (Exception e) {
 
         }
