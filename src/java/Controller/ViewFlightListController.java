@@ -1,24 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Controller;
 
+import Controller.DTOS.PaginatedListDTO;
 import DAOS.FlightDAO;
-import Model.Flight;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Administrator
- */
+
 public class ViewFlightListController extends HttpServlet {
 
     /**
@@ -33,22 +25,24 @@ public class ViewFlightListController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int page = 1;
-        int recordsPerPage = 10;
-        if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
-        }
+
         FlightDAO flightDAO = new FlightDAO();
-        int noOfRecords = flightDAO.flightList.size();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0/ recordsPerPage);
-         ArrayList<Flight> list = flightDAO.getFlight((page - 1) * recordsPerPage, Math.min((page) * recordsPerPage, noOfRecords), flightDAO.readDataByAdmin());
-        request.setAttribute("flightList", list);
+
+        int pageSize = 10;
+        int noOfPages = (int) Math.ceil(flightDAO.getAllFlights().size() * 1.0 / pageSize);
+
+        String page_raw = request.getParameter("page");
+        int page;
+        try {
+            page = Integer.parseInt(page_raw);
+        } catch (Exception e) {
+            page = 1;
+        }
+        request.setAttribute("flightList", PaginatedListDTO.getPage(flightDAO.getAllFlights(), page, pageSize));
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
-        RequestDispatcher view
-                = request.getRequestDispatcher("flightList.jsp");
+        RequestDispatcher view = request.getRequestDispatcher("flightList.jsp");
         view.forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

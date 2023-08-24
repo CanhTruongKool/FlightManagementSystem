@@ -1,4 +1,6 @@
-﻿
+﻿--DROP DATABASE
+USE [master]
+DROP DATABASE FMS_FlightManagementSystem
 --CREATE DATABASE
 USE [master]
 CREATE DATABASE FMS_FlightManagementSystem
@@ -156,24 +158,74 @@ values ('Ha Noi', 'Ho Chi Minh','2023-08-20 10:00',1400000),
 ('Quang Ninh', 'Quang Binh','2023-08-20 8:00',700000),
 ('Quang Tri', 'Quang Nam','2023-08-19 16:00',7200000);
 
-select ID, DeparturePlace,Destination,DepartureDate from Flights order by ID desc 
+INSERT INTO Customers([Name],[PhoneNumber],[IdentifyNumber])
+VALUES (N'Phạm Ngọc Quyền','0367718301','392846597719'),
+(N'Nguyễn Hoàng Việt','0905606537','382088439320'),
+(N'Trần Vĩ Bảo Ngân','0356754087','389457759767'),
+(N'Bùi Ngọc Bảo Trân','0859478679','522329072093'),
+(N'Lê Hồng Hà','0355487008','036139288213'),
+(N'Tăng Thị Kim Ý','0356577273','062077260856'),
+(N'Nguyễn Phạm Hồng Giao','0354034063','960878476225'),
+(N'Lê Thị Chí Thương ','0984254577','001159184316'),
+(N'Diệp Minh Hùng','0911334709','211824321895'),
+(N'Đinh Nguyễn Đăng Quyên','0903560177','062434320494'),
+(N'Nguyễn Ngô Chiến','0978177739','860066621023'),
+(N'Đỗ Phi Hùng','0365149482','182324291125'),
+(N'Nguyễn Khánh Ngọc','0762761660','821121531105'),
+(N'Huỳnh Gia Bảo','0336165644','821122531105'),
+(N'Ngô Gia Huy','0869601204','162603825159'),
+(N'Nguyễn Trung Dũng','0862247403','212601384381'),
+(N'Vũ Ngọc Ánh','0358250148','212601284381'),
+(N'Nguyễn Thu Ngân','0362452906','043638628971'),
+(N'Bùi Tân Nhật','0327452442','017606448624'),
+(N'Lê Huy Hoàn ','0935359107','072446737384'),
+(N'Nguyễn Bảo Thiện','0385045284','224822440793'),
+(N'Nguyễn Hải Đăng','0866942857','881604165297'),
+(N'Trình Xuân Sang','0359016225','039303095327'),
+(N'Nguyễn Lê Quỳnh Hương','0966943562','946288756551'),
+(N'Hoàng Nguyễn Hoài Vi','0933203279','162493407703'),
+(N'Võ Phúc Trường','0795680482','007084935011'),
+(N'Trần Ngọc Cường','0355819231','536143186265'),
+(N'Quảng Thành Đô','0899992156','218211917601'),
+(N'Nguyễn Minh Hằng ','0779581688','509603900392'),
+(N'Tran Van Loc','0961700296','517656982997'),
+(N'Lê Quốc Việt','0333908576','489742531996'),
+(N'Phạm Nguyệt Minh','0915620526','355662360773'),
+(N'Trần Thu Ngân','0395355302','275470958099'),
+(N'Nguyễn Sơn Hòa Huy','0862024246','591908212447')
 
-insert into Customers([Name],[PhoneNumber],[IdentifyNumber])
-values ('Tester01',0123456789,012345678910)
 
-insert into Tickets ([FlightID],[PassengerID],[Code])
-	values (01,01,'ab7c'),
-	(02,01,'azc'),(03,01,'as'),(04,01,'asc'),(05,01,'aaac'),(06,01,'asdc'),(07,01,'abcsadf'),(08,01,'abca')
+INSERT INTO Tickets ([FlightID],[PassengerID],[Code])
+VALUES (1,1,'BZH05H'),
+(1,2,'tED2Xp'),
+(1,3,'pBD0Lb'),
+(1,4,'hiH6Tb'),
+(1,5,'veBG0I'),
+(1,6,'h7IUMA'),
+(1,7,'3JFcMQ'),
+(1,8,'e5BCso'),
+(1,9,'NFswLh'),
+(1,10,'UKNvjx'),
+(1,11,'O1d6KK'),
+(1,12,'0uREtm'),
+(1,13,'n5ArBZ'),
+(1,14,'G7H10q'),
+(1,15,'YNVlTd'),
+(1,16,'gPtKEe'),
+(1,17,'USTzk8'),
+(2,18,'YT1Sd9'),
+(2,19,'GilgzO'),
+(2,20,'WCCVZs'),
+(2,21,'H8l9OM'),
+(2,22,'XozeQx'),
+(2,23,'rrBKeo'),
+(2,24,'Fpyn4H'),
+(2,25,'Uv5U24'),
+(2,26,'T1DnlH'),
+(2,27,'Ux4MHT'),
+(2,28,'61V6y7'),
+(2,29,'9XGDOq'),
+(2,30,'UWU2cg'),
+(2,31,'Eb9GPu'),
+(2,32,'hprlAj')
 
-	SELECT SUM(r.RevenueTicket) AS RevenueTicket, SUM(r.RevenueCargo) AS RevenueCargo 
-	FROM ( 
-		SELECT ID, QuanlityTicket*Flights.Price AS RevenueTicket, RevenueCargo
-		FROM Flights left join(
-			SELECT FlightID, COUNT(*) AS QuanlityTicket
-			FROM Tickets 
-			GROUP BY FlightID) AS t on t.FlightID = Flights.ID left join(
-				SELECT FlightID, SUM(FlightCargo.Price) AS RevenueCargo
-				FROM FlightCargo
-				GROUP BY FlightID HAVING COUNT(*) > 0) AS c on c.FlightID = Flights.ID) AS r
-
-select count(*) from Tickets where FlightID = 1

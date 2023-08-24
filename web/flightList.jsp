@@ -1,8 +1,3 @@
-<%-- 
-    Document   : FlightList
-    Created on : Aug 3, 2023, 3:23:33 PM
-    Author     : Administrator
---%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,14 +15,15 @@
                 <th>Departure Place</th>
                 <th>Destination</th>
                 <th>Departure Date</th>
-                <th>Number Of Seats</th>
-                <th>Max Cargo Weight</th>
+                <th>Number</br> Of Seats</th>
+                <th>Max </br>Cargo Weight</th>
                 <th>Price</th>
                 <th>Created By</th>
                 <th>Created Time</th>
                 <th>Modified By</th>
-                <th>Last Modified Time</th>
+                <th>Last </br>Modified Time</th>
                 <th>Status</th>
+                <th>Actions</th>
             </tr>
             <c:forEach var="flight" items="${requestScope.flightList}">
                 <tr>
@@ -45,42 +41,44 @@
 
                     <c:set var = "status" value = "${flight.getIsActivity()}"/>
                     <c:if test = "${status == 1}">
-                        <td><a style="color: greenyellow" href="cancelFlight?page=${currentPage}&id=${flight.ID}" >Activity</a></td> 
+                        <td><p style = "color: greenyellow">Active</p></td>
                     </c:if>
                     <c:if test = "${status != 1}">
                         <td><p style="color: red">Cancelled</p></td> 
                     </c:if>
+                    <td>
+                        <a href="flightPassenger?fp=${currentPage}&id=${flight.ID}&st=${status}"><button>Detail</button></a></br>
+                        <c:if test = "${status == 1}">
+                            </br><a href="cancelFlight?page=${currentPage}&id=${flight.ID}" ><button> Cancel</button></a>
+                        </c:if>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
-        <a href="management"><button>Back</button></a>
+        <table border="1" cellpadding="5" cellspacing="5">
+            <tr>
+                <c:forEach begin="1" end="${noOfPages}" var="i">
+                    <c:choose>
+                        <c:when test="${currentPage eq i}">
+                            <td>${i}</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td><a href="flightlist?page=${i}">${i}</a></td>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+            </tr>
+        </table>
+
 
         <c:if test="${currentPage != 1}">
         <td><a href="flightlist?page=${currentPage - 1}">Previous</a></td>
     </c:if>
 
-    <%--For displaying Page numbers. The when condition does not display
-                a link for the current page--%>
-
-    <table border="1" cellpadding="5" cellspacing="5">
-        <tr>
-            <c:forEach begin="1" end="${noOfPages}" var="i">
-                <c:choose>
-                    <c:when test="${currentPage eq i}">
-                        <td>${i}</td>
-                    </c:when>
-                    <c:otherwise>
-                        <td><a href="flightlist?page=${i}">${i}</a></td>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-        </tr>
-    </table>
-
-    <%--For displaying Next link --%>
-
     <c:if test="${currentPage lt noOfPages}">
         <td><a href="flightlist?page=${currentPage + 1}">Next</a></td>
     </c:if>
+
+    <a href="management"><button>Back</button></a>
 </body>
 </html>
