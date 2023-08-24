@@ -72,8 +72,7 @@ CREATE TABLE Tickets
 	FlightID int FOREIGN KEY REFERENCES Flights(ID),
 	PassengerID int FOREIGN KEY REFERENCES Customers(ID),
 	Code varchar(30) UNIQUE not null,
-	Price float DEFAULT 0,
-	ByTime datetime DEFAULT GETDATE(),
+	BuyTime datetime DEFAULT GETDATE(),
 	ModifiedTime datetime DEFAULT GETDATE(),
 	IsCancelled bit DEFAULT 0,
 )
@@ -88,7 +87,7 @@ CREATE TABLE FlightCargo
 	Code varchar(30) UNIQUE not null,
 	[Weight] float DEFAULT 20, 
 	Price float DEFAULT 0,
-	ByTime datetime DEFAULT GETDATE(),
+	BuyTime datetime DEFAULT GETDATE(),
 	ModifiedTime datetime DEFAULT GETDATE(),
 	IsCancelled bit DEFAULT 0,
 )
