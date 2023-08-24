@@ -53,7 +53,7 @@
                                 <td>${i}</td>
                             </c:when>
                             <c:otherwise>
-                                <td><a href="flightPassenger?page=${i}">${i}</a></td>
+                                <td><a href="flightPassenger?fp=${flightPage}&id=${flightID}&st=${statusFlight}&page=${i}">${i}</a></td>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
@@ -61,11 +61,11 @@
             </table>
 
             <c:if test="${currentPage != 1}">
-                <td><a href="flightPassenger?page=${currentPage - 1}">Previous</a></td>
+                <td><a href="flightPassenger?fp=${flightPage}&id=${flightID}&st=${statusFlight}&page=${currentPage - 1}">Previous</a></td>
             </c:if>
 
             <c:if test="${currentPage lt noOfPages}">
-                <td><a href="flightPassenger?page=${currentPage + 1}">Next</a></td>
+                <td><a href="flightPassenger?fp=${flightPage}&id=${flightID}&st=${statusFlight}&page=${currentPage + 1}">Next</a></td>
             </c:if>
                 <a href="flightlist?page=${requestScope.flightPage}"><button>Back</button></a>
         </table>

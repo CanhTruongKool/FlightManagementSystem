@@ -16,7 +16,7 @@ public class PassengerDAO extends DataAccessObject {
 
     public ArrayList<PassengerDTO> getPassengersByFlightID(String flightID) throws SQLException {
         ArrayList<PassengerDTO> passengerList = new ArrayList<>();
-        String sql = "SELECT t.PassengerID, c.Name, c.PhoneNumber, c.IdentifyNumber, t.Code, t.ByTime, t.ModifiedTime, t.IsCancelled\n"
+        String sql = "SELECT t.PassengerID, c.Name, c.PhoneNumber, c.IdentifyNumber, t.Code, t.BuyTime, t.ModifiedTime, t.IsCancelled\n"
                 + "FROM Tickets AS t join Customers AS c on t.PassengerID = c.ID \n"
                 + "WHERE FlightID = ?";
 
@@ -36,7 +36,7 @@ public class PassengerDAO extends DataAccessObject {
         String phoneNumber = resultSet.getString("PhoneNumber");
         String identifyNumber = resultSet.getString("IdentifyNumber");
         String ticketCode = resultSet.getString("Code");
-        LocalDateTime buyTime = resultSet.getTimestamp("ByTime").toLocalDateTime();
+        LocalDateTime buyTime = resultSet.getTimestamp("BuyTime").toLocalDateTime();
         LocalDateTime modifiedTime = resultSet.getTimestamp("ModifiedTime").toLocalDateTime();
         int status = resultSet.getInt("IsCancelled");
         return new PassengerDTO(passengerID, name, phoneNumber, identifyNumber, ticketCode, buyTime, modifiedTime, status);
