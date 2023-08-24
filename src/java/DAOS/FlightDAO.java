@@ -1,7 +1,6 @@
 package DAOS;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import Controller.DTOS.FlightDTO;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -44,27 +43,48 @@ public class FlightDAO extends DataAccessObject {
         return list;
     }
 
-    public ArrayList<Flight> readDataByAdmin() {
-        ArrayList<Flight> list = new ArrayList<>();
+    public ArrayList<FlightDTO> getAllFlights() {
+
+        ArrayList<FlightDTO> flightsList = new ArrayList<>();
+
         try {
-            // connnect to database 'FMS_FlightManagementSystem'
+            String sql = "SELECT f.ID,  DeparturePlace, DepartureDate, Destination, NumberOfSeats, MaxCargoWeight, Price, \n"
+                    + "		ac.UserName as CreatedBy, CreatedTime, am.UserName as  ModifiedBy, LastModifiedTime, IsActivity \n"
+                    + "FROM Flights AS f left join Admin AS am \n"
+                    + "		ON f.ModifiedBy = am.ID left join Admin as ac \n"
+                    + "		ON f.CreatedBy = ac.ID\n"
+                    + "ORDER BY LastModifiedTime DESC";
 
-            String sql = "select ID,  DeparturePlace, DepartureDate, Destination, NumberOfSeats, MaxCargoWeight, Price, CreatedBy, CreatedTime,"
-                    + " ModifiedBy, LastModifiedTime, IsActivity from Flights  order by DepartureDate Desc";
-            // crate statement
             preparedStatement = connection.prepareStatement(sql);
-            // get data from table 'tbl Flight'
             resultSet = preparedStatement.executeQuery();
-            // show data
+            
             while (resultSet.next()) {
-                list.add(getEntity());
+                flightsList.add(getFlightDTO());
             }
-
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        return list;
+        return flightsList;
+    }
+
+    private FlightDTO getFlightDTO() throws SQLException {
+        int ID = resultSet.getInt("ID");
+        String departurePlace = resultSet.getString("DeparturePlace");
+        String destination = resultSet.getString("Destination");
+        LocalDateTime departureDate = resultSet.getTimestamp("DepartureDate").toLocalDateTime();
+        int numberOfSeats = resultSet.getInt("NumberOfSeats");
+        int maxCargoWeight = resultSet.getInt("MaxCargoWeight");
+        float price = resultSet.getFloat("Price");
+        String createdBy = resultSet.getString("CreatedBy");
+        LocalDateTime createdTime = resultSet.getTimestamp("CreatedTime").toLocalDateTime();
+        String modifiedBy = resultSet.getString("ModifiedBy");
+        LocalDateTime lastModifiedTime = resultSet.getTimestamp("LastModifiedTime").toLocalDateTime();
+        int isActivity = resultSet.getInt("IsActivity");
+
+        return new FlightDTO(ID, departurePlace, destination, departureDate, numberOfSeats,
+                maxCargoWeight, price, createdBy, createdTime, modifiedBy, lastModifiedTime, isActivity);
     }
 
     public ArrayList<Flight> searchFlight(String departure, String destination, String date) {

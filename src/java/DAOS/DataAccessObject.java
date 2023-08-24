@@ -5,13 +5,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class DataAccessObject implements Serializable {
+
     protected Connection connection;
     protected PreparedStatement preparedStatement;
     protected ResultSet resultSet;
@@ -26,30 +26,31 @@ public class DataAccessObject implements Serializable {
         super.finalize();
     }
 
-
-
-    private Connection getConnection(){
+    private Connection getConnection() {
         Context context;
         try {
             context = new InitialContext();
             Context tomcatCtx = (Context) context.lookup("java:comp/env");
             DataSource ds = (DataSource) tomcatCtx.lookup("jdbc/MyAppDS");
-            
+
             Connection con = ds.getConnection();
             return con;
         } catch (NamingException | SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return null; 
+        return null;
     }
 
-    private void closeConnection() throws Exception{
-        if(resultSet != null)
+    private void closeConnection() throws Exception {
+        if (resultSet != null) {
             resultSet.close();
-        if(preparedStatement != null)
+        }
+        if (preparedStatement != null) {
             preparedStatement.close();
-        if(connection != null)
+        }
+        if (connection != null) {
             connection.close();
+        }
     }
 }

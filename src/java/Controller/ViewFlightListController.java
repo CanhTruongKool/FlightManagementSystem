@@ -3,9 +3,7 @@ package Controller;
 
 import Controller.DTOS.PaginatedListDTO;
 import DAOS.FlightDAO;
-import Model.Flight;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,7 +29,7 @@ public class ViewFlightListController extends HttpServlet {
         FlightDAO flightDAO = new FlightDAO();
 
         int pageSize = 10;
-        int noOfPages = (int) Math.ceil(flightDAO.readDataByAdmin().size() * 1.0 / pageSize);
+        int noOfPages = (int) Math.ceil(flightDAO.getAllFlights().size() * 1.0 / pageSize);
 
         String page_raw = request.getParameter("page");
         int page;
@@ -40,7 +38,7 @@ public class ViewFlightListController extends HttpServlet {
         } catch (Exception e) {
             page = 1;
         }
-        request.setAttribute("flightList", PaginatedListDTO.getPage(flightDAO.readDataByAdmin(), page, pageSize));
+        request.setAttribute("flightList", PaginatedListDTO.getPage(flightDAO.getAllFlights(), page, pageSize));
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
         RequestDispatcher view = request.getRequestDispatcher("flightList.jsp");
