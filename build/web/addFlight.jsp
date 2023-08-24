@@ -16,7 +16,7 @@
         crossorigin="anonymous"></script>
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="icon" href="https://img.favpng.com/2/22/3/airplane-aircraft-logo-icon-a5-png-favpng-g0VhdxjfFf5Uedzuma2CxapfQ.jpg">
+        <link rel="icon" href="https://png.pngtree.com/png-vector/20191023/ourlarge/pngtree-vector-airplane-icon-png-image_1851857.jpg">
         <style> <%@include file="CSS/addFlightcss.css" %></style>
     </head>
     <body>
